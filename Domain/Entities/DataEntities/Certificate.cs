@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities.DataEntities
 {
-    public class Certificate : BaseEntity
+    public class Certificate : BaseEntity 
     {
         public string? Description { get; set; }
         public string? Image { get; set; }
