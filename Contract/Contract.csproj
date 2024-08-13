@@ -9,6 +9,8 @@
   <ItemGroup>
     <Folder Include="AddDtos\" />
     <Folder Include="GetDtos\" />
+    <Folder Include="GetDtos\" />
+    <Folder Include="Email\" />
   </ItemGroup>
 
 </Project>
