@@ -11,7 +11,6 @@
     <Folder Include="GetDtos\" />
     <Folder Include="GetDtos\" />
     <Folder Include="Email\" />
-    <Folder Include="AuthDtos\" />
   </ItemGroup>
 
 </Project>
