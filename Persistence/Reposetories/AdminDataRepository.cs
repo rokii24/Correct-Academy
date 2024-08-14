@@ -1,26 +1,21 @@
-﻿using Domain.IReposetories.DataRepository;
+﻿using Domain.IRepositories.DataRepository;
+using Persistence.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Reposetories.DataRepository
+namespace Persistence.Repositories.DataRepository
 {
     public class AdminDataRepository : IAdminDataRepository
     {
-       // private readonly CorrectContext _context;
+        private readonly CorrectAcademyContext _context;
 
-      
+        public AdminDataRepository(CorrectAcademyContext context) => _context = context;
 
-       // public AdminDataRepository(CorrectContext correctContext) =>_context = correctContext;
-      
-        public Task<IEnumerable<object>> GetDevicesRequiringUpdate(Guid organizationId)
-        {
-            throw new NotImplementedException();
-        }
 
-        public int SaveChanges() => throw new NotImplementedException();
-
+        public int SaveChanges() => _context.SaveChanges();
+        public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
     }
 }
