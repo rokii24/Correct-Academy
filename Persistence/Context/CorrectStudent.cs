@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.AuthenticationEntities;
+using Domain.Entities.DataEntities;
 using Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -9,17 +10,13 @@ using System.Threading.Tasks;
 
 namespace Persistence.Context
 {
-    public class CorrectStudent : IdentityUser, IUser
+    public class CorrectStudent : CorrectUser
     {
-        public string Id { get; set; }
-        public string? Email { get; set; }
-        public string Name { get; set; }
+
         public int age { get; set; }
         public Gender Gender { get; set; }
-        public string? UserImage { get; set; }
-        public string? Bio { get; set; }
-        public string? OTP { get; set; }
-        public DateTime? OTPValidTo { get; set; }
-        public DateTime RegistrationTime { get; set; }
+        public string? BackgroundImage { get; set; }
+        public ICollection<Certificate>? Certificates { get; set; }
+
     }
 }
