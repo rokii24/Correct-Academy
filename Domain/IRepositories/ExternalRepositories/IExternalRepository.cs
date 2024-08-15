@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities.DataEntities
+namespace Domain.IRepositories.ExternalRepositories
 {
-    public class BaseEntity
+    public interface IExternalRepository
     {
-        public Guid Id { get; set; }
     }
 }

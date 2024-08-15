@@ -9,9 +9,9 @@ namespace Domain.Entities.DataEntities
 {
     public class Certificate : BaseEntity 
     {
-        public string? Description { get; set; }
+        public string Description { get; set; } = null!;
         public string? Image { get; set; }
-        public string? UserId { get; set; }
-        public IUser User { get; set; } = null!;
+        public string StudentId { get; set; } = null!;
+        public IStudent Student { get; set; } = null!;
     }
 }

@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities.DataEntities
 {
-    public class Posts:BaseEntity
+    public class Post : BaseEntity
     {
-        public string Description { get; set; }=null!;
-        public ICollection<string> Image { get; set; }
-        public string UserId { get; set; }
+        public string? Description { get; set; }
+        public ICollection<string>? Images { get; set; }
+        public string UserId { get; set; } = null!;
         public IUser User { get; set; } = null!;
 
-       
-
-
-
+        public ICollection<Message>? Comments {  get; set; }
     }
 }

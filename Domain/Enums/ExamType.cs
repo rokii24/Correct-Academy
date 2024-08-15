@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.IReposetories.DataRepository
+namespace Domain.Enums
 {
-    public interface IAdminDataRepository
-    {  
-        int SaveChanges();
+    public enum ExamType
+    {
+        Quiz,
+        Project,
+        Task
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities.DataEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,6 @@ namespace Domain.Entities.AuthenticationEntities
         public string? Email { get; set; }
         public DateTime? OTPValidTo { get; set; }
         DateTime RegistrationTime { get; set; }
+
     }
 }

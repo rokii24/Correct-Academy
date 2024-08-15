@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities.DataEntities
+namespace Domain.Enums
 {
-    public class Classes : BaseEntity
+    public enum MessageType
     {
-      //  ICollection<CorrectStudent>
+        Text,
+        Image,
+        Voice,
+        Video
     }
 }
