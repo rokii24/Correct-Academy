@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Enums
 {
-    public enum MessageType
+    public enum ExamType
     {
-        Text,
-        Image,
-        Voice,
-        Video
+        Quiz,
+        Project,
+        Task
     }
 }

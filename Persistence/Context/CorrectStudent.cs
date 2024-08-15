@@ -18,5 +18,6 @@ namespace Persistence.Context
         public string? BackgroundImage { get; set; }
         public ICollection<Certificate>? Certificates { get; set; }
         public ICollection<Course> Courses { get; set; } = null!;
+        public ICollection<StudentExam> StudentExams { get; set; } = null!;
     }
 }

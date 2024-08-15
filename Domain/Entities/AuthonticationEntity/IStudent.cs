@@ -16,6 +16,6 @@ namespace Domain.Entities.AuthenticationEntities
         
         public ICollection<Certificate>? Certificates { get; set; }
         public ICollection<Course> Courses { get; set; }
-
+        public ICollection<StudentExam> StudentExams { get; set; }
     }
 }
