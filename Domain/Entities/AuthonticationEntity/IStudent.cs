@@ -15,6 +15,7 @@ namespace Domain.Entities.AuthenticationEntities
         public string? BackgroundImage { get; set; }
         
         public ICollection<Certificate>? Certificates { get; set; }
+        public ICollection<UsersClass> Classes { get; set; }
         public ICollection<Course> Courses { get; set; }
         public ICollection<StudentExam> StudentExams { get; set; }
     }

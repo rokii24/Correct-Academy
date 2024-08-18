@@ -11,7 +11,7 @@ namespace Domain.Entities.AuthenticationEntities
     public interface IInstructor
     {
         public float Salary { get; set; }
-
+        public ICollection<UsersClass> Classes { get; set; }
         public ICollection<Course> Courses { get; set; }
     }
 }
