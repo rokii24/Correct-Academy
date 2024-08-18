@@ -1,4 +1,5 @@
-﻿using Domain.Entities.DataEntities;
+﻿using Domain.Entities.AuthonticationEntity;
+using Domain.Entities.DataEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,10 @@ namespace Domain.Entities.AuthenticationEntities
         public string? Email { get; set; }
         public DateTime? OTPValidTo { get; set; }
         DateTime RegistrationTime { get; set; }
+        public string RoleId { get; set; } 
+        public IRole Role { get; set; }
+        public ICollection<Post>? Posts { get; set; } 
+        public ICollection<Message>? Messages { get; set; } 
 
     }
 }

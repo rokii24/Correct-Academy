@@ -12,4 +12,8 @@
     <Folder Include="ExternalServices\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Service.Abstraction\Service.Abstraction.csproj" />
+  </ItemGroup>
+
 </Project>

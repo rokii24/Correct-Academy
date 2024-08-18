@@ -19,12 +19,12 @@ namespace Domain.Entities.DataEntities
         public ICollection<Message>? Replies { get; set; }
     }
 
-    public class Comment : Message
+    public class ChatMessage : Message
     {
         public Guid ChatId { get; set; }
         public Chat Chat { get; set; } = null!;
     }
-    public class ChatMessage : Message
+    public class Comment : Message
     {
         public Guid PostId { get; set; }
         public Post Post { get; set; } = null!;
