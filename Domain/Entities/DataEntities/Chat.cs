@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities.DataEntities
 {
-    public class Chat : BaseEntity
+    public class Chat 
     {
         public string Title { get; set; } = null!;
         public string? Description { get; set; }

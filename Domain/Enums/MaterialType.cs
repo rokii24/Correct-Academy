@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Enums
 {
-    public enum MessageType
+    public enum MaterialType
     {
-        Text,
-        Image,
-        Voice,
-        
-        Video,
         PDF,
+        Video
     }
 }
