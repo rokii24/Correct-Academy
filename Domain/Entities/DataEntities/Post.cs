@@ -14,6 +14,7 @@ namespace Domain.Entities.DataEntities
         public string UserId { get; set; } = null!;
         public IUser User { get; set; } = null!;
 
-        public ICollection<Message>? Comments {  get; set; }
+        //public ICollection<Message>? Comments {  get; set; }
+        public ICollection<Comment>? Comments {  get; set; }
     }
 }

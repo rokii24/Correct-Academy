@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Context
 {
-    public class Academy : CorrectUser, IAcademy
+    public class CorrectAcademy : CorrectUser, IAcademy
     {
         public string Type { get; set; } = null!;
     }
