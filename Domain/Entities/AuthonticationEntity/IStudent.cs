@@ -18,5 +18,6 @@ namespace Domain.Entities.AuthenticationEntities
         public ICollection<UsersClass> Classes { get; set; }
         public ICollection<Course> Courses { get; set; }
         public ICollection<StudentExam> StudentExams { get; set; }
+
     }
 }

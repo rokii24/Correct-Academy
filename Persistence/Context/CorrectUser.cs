@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.AuthenticationEntities;
+using Domain.Entities.AuthonticationEntity;
 using Domain.Entities.DataEntities;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -18,5 +19,9 @@ namespace Persistence.Context
         public string? Bio { get; set; }
         public DateTime? OTPValidTo { get; set; }
         public DateTime RegistrationTime { get; set; }
+        public string RoleId { get; set; } = null!;
+        public IRole Role { get; set; } = null!;
+        public ICollection<Post>? Posts { get ; set ; }
+        public ICollection<Message>? Messages { get ; set; }
     }
 }
