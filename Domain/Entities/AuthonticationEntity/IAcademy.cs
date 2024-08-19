@@ -1,4 +1,5 @@
 ﻿
+using Domain.Entities.DataEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,5 @@ namespace Domain.Entities.AuthenticationEntities
     public interface IAcademy 
     {
         public string Type { get; set; }
-
     }
 }

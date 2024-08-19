@@ -53,7 +53,7 @@ namespace Service.ExternalServices
 
         public async Task<string> SaveVoice(string path, string voice)
         {
-            string mimeType = Base64Utils.GetVideoMimeTypeFromBase64(voice);
+            string mimeType = Base64Utils.GetVoiceMimeTypeFromBase64(voice);
             
             string fileExtension = await Save(path, mimeType, voice);
 
