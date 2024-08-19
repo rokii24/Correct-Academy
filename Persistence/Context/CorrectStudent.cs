@@ -20,5 +20,6 @@ namespace Persistence.Context
         public ICollection<Course> Courses { get; set; } = null!;
         public ICollection<StudentExam> StudentExams { get; set; } = null!;
         public ICollection<UsersClass> UsersClass { get; set; }
+        public ICollection<UsersClass> Classes { get; set; }
     }
 }
