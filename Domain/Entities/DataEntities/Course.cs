@@ -9,8 +9,8 @@ namespace Domain.Entities.DataEntities
 {
     public class Course : BaseEntity
     {
-        public ICollection<UsersClass> UsersClasses { get; set; } = null!;
         public ICollection<IInstructor> Instructor { get; set; } = null!;
         public ICollection<Exam>? Exams { get; set; }
+        public ICollection<UsersClass> Classes { get; set; } = null!;
     }
 }
