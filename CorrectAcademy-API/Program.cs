@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Persistence.ExternalConfigurations;
 using Persistence.Reposetories.ExternalRepository;
+using Domain.IRepositories.ExternalRepositories;
+using Persistence.Reposetories;
 
 namespace CorrectAcademy_API
 {
@@ -30,7 +32,7 @@ namespace CorrectAcademy_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             #region Db Context
-            var connection = builder.Configuration.GetConnectionString("ShroukCon");
+            var connection = builder.Configuration.GetConnectionString("SoomCon");
             builder.Services
                 .AddDbContext<CorrectAcademyContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Persistence")));
 
@@ -63,10 +65,13 @@ namespace CorrectAcademy_API
             builder.Services.AddAuthorization();
             #endregion
             #region Configurations
-            // builder.Services.Configure<JWTConfiguration>(builder.Configuration.GetSection("Jwt"));
+            builder.Services.Configure<JWTConfiguration>(builder.Configuration.GetSection("Jwt"));
             //  builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
             builder.Services.Configure<GoogleConfiguration>(builder.Configuration.GetSection("Google"));
             //builder.Services.Configure<BraintreeSetting>(builder.Configuration.GetSection("Payment"));
+            #endregion
+            #region  Scopes
+            builder.Services.AddScoped<IExternalRepository, ExternalRepositories>();
             #endregion
             var app = builder.Build();
             AddRoles(app);

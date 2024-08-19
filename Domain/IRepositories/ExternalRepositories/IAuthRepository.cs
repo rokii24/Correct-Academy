@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain.IRepositories.ExternalRepositories
 {
-    public interface IExternalRepository
+    public interface IAuthRepository
     {
-        IEmailRepository EmailRepository { get; }
-        IAuthRepository AuthRepository { get; }
-
+        Task<(string, string, string)> LoginWithGoogle(string token, string provider);
     }
 }
