@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Persistence.Context
 {
-    public class CorrectInstractor : CorrectUser
+    public class Academy : CorrectUser, IAcademy
     {
-        public string? Salary { get; set; }
+        public string Type { get; set; } = null!;
     }
 }

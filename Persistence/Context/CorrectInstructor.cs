@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.AuthenticationEntities;
+using Domain.Entities.DataEntities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Persistence.Context
 {
-    public class CorrectAcademy : CorrectUser
+    public class CorrectInstructor : CorrectUser, IInstructor
     {
-        public string? type { get; set; }
-
+        public float Salary { get; set; }
+        public ICollection<Course> Courses { get; set; } = null!;
     }
 }

@@ -16,8 +16,8 @@ namespace Persistence.Context
         {
         }
         public DbSet<CorrectStudent> Students { get; set; }
-        public DbSet<CorrectAcademy> Academies { get; set; }
-        public DbSet<CorrectInstractor> Instractors { get; set; }
+        public DbSet<Academy> Academies { get; set; }
+        public DbSet<CorrectInstructor> Instructors { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
 
     }

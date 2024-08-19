@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities.DataEntities
+namespace Domain.Enums
 {
-    public class BaseEntity
+    public enum MaterialType
     {
-        public Guid Id { get; set; }
+        PDF,
+        Video
     }
 }

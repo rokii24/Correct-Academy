@@ -4,9 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.IReposetories
+namespace Domain.Enums
 {
-    internal class IEmailRepo
+    public enum MessageType
     {
+        Text,
+        Image,
+        Voice,
+        
+        Video,
+        PDF,
     }
 }

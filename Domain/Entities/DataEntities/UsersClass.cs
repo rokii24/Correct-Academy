@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities.DataEntities
 {
-    public class Certificate : BaseEntity 
+    public class UsersClass
     {
-        public string Description { get; set; } = null!;
-        public string? Image { get; set; }
         public string StudentId { get; set; } = null!;
         public IStudent Student { get; set; } = null!;
+        public string CourseId { get; set; } = null!;
+        public Course Course { get; set; } = null!;
+        public string InstructorId { get; set; } = null!;
+        public IInstructor Instructor { get; set; } = null!;
     }
 }
