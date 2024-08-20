@@ -4,12 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Persistence.Context;
 using Persistence.ExternalConfigurations;
 using Persistence.Reposetories.ExternalRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace Persistence.Reposetories
 {
@@ -19,9 +13,9 @@ namespace Persistence.Reposetories
         private readonly IConfiguration _configuration;
         private readonly UserManager<CorrectUser> _userManager;
         private readonly JWTConfiguration _jwt;
-        public ExternalRepositories(IAuthRepository authRepository, IConfiguration configuration, UserManager<CorrectUser> userManager, JWTConfiguration jwt)
+        public ExternalRepositories( IConfiguration configuration, UserManager<CorrectUser> userManager, JWTConfiguration jwt)
         {
-            _authRepository=authRepository;
+            //_authRepository=authRepository;
             _configuration=configuration;
             _userManager=userManager;
             _jwt=jwt;
@@ -35,17 +29,20 @@ namespace Persistence.Reposetories
             {
                 if (_authRepository == null)
                 {
-                   
+                    JWTConfiguration jWT = new JWTConfiguration();
+                    _configuration.GetRequiredSection("Jwt").Bind(jWT);
                     GoogleConfiguration google = new GoogleConfiguration();
                     _configuration.GetRequiredSection("Google").Bind(google);
 
                     _authRepository = new AuthRepository(
-                         googleConfiguration: google,_userManager,_jwt
-                     );
+                        userManager: _userManager,
+                        googleConfiguration: google,
+                        jwt: jWT);
                 }
 
                 return _authRepository;
             }
         }
     }
+    
 }
