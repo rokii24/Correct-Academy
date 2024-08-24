@@ -38,7 +38,7 @@ namespace CorrectAcademy_API
             builder.Services.AddSwaggerGen();
 
             #region Db Context
-            var connection = builder.Configuration.GetConnectionString("SoomCon");
+            var connection = builder.Configuration.GetConnectionString("MohCon");
             builder.Services
                 .AddDbContext<CorrectAcademyContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Persistence")));
 
@@ -104,7 +104,7 @@ namespace CorrectAcademy_API
 
 
             app.MapControllers();
-
+            app.MapHub<CorrectHub>("Hub");
             app.Run();
         }
     }
