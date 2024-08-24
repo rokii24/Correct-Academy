@@ -8,6 +8,8 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
+
 
 namespace Persistence.Reposetories
 {
@@ -17,7 +19,9 @@ namespace Persistence.Reposetories
         public EmailRepository(EmailConfiguration configuration)
         {
             _configuration = configuration;
-            
+            CheckMailParamters();
+
+
         }
         private void CheckMailParamters()
         {

@@ -12,6 +12,8 @@ namespace Persistence.Context
 {
     public class CorrectUser : IdentityUser, IUser
     {
+        internal readonly object OrganizationRules;
+
         public string Name { get; set; } = null!;
         public string? Address { get; set; }
         public string? OTP { get; set; }

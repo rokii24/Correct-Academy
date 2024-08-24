@@ -6,7 +6,6 @@ namespace Domain.IRepositories.ExternalRepositories
     {
         IEmailRepository EmailRepository { get; }
         IAuthRepository AuthRepository { get; }
-        string GenerateOtp();
 
     }
 }

@@ -1,18 +1,20 @@
 ﻿using Domain.Entities.AuthenticationEntities;
-using Domain.IRepositories.ExternalRepositories;
-using Google.Apis.Auth;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Persistence.Context;
-using Persistence.ExternalConfigurations;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
+using Role = Domain.Enums.CorrectRole;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System.Threading.Tasks;
+using Domain.Exceptions;
+using Google.Apis.Auth;
+using Persistence.ExternalConfigurations;
+using Microsoft.EntityFrameworkCore;
+using Domain.IRepositories.ExternalRepositories;
 
 namespace Persistence.Reposetories.ExternalRepository
 {
@@ -20,13 +22,59 @@ namespace Persistence.Reposetories.ExternalRepository
     {
         private readonly GoogleConfiguration _googleConfiguration;
         private readonly UserManager<CorrectUser> _userManager;
+        private readonly SignInManager<CorrectUser> _signInManager;
+
         private readonly JWTConfiguration _jwt;
-        public AuthRepository(GoogleConfiguration googleConfiguration, UserManager<CorrectUser> userManager, JWTConfiguration jwt)
+        public AuthRepository(SignInManager<CorrectUser> signInManager,GoogleConfiguration googleConfiguration, UserManager<CorrectUser> userManager, JWTConfiguration jwt)
         {
             _googleConfiguration = googleConfiguration;
             _userManager = userManager;
+            _signInManager = signInManager;
+
             _jwt = jwt;
         }
+        private async Task SaveOTP(string userId, string otp, int mints = 3)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                if (user.OTP is not null && user.OTPValidTo > DateTime.Now)
+                    throw new IdentityException("Something Heppened when Saving OTP");
+                user.OTP = otp;
+                user.OTPValidTo = DateTime.Now.AddMinutes(mints);
+                await _userManager.UpdateAsync(user);
+            }
+        }
+        private string FillError(IdentityResult result)
+        {
+            var errors = "";
+            foreach (var error in result.Errors)
+            {
+                errors += $"{error.Description} , ";
+            }
+            return errors;
+        }
+        private CorrectUser ToCorrectUser(IUser user)
+        {
+            var corrcet = user as CorrectUser;
+            if (corrcet is null)
+                throw new NotFoundException();
+
+            return corrcet;
+        }
+
+        private async Task ValidateOTP(CorrectUser user, string otp)
+        {
+            if (user.OTP == otp && user.OTPValidTo is not null && user.OTPValidTo >= DateTime.Now)
+            {
+                user.OTP = null;
+                user.OTPValidTo = null;
+                await _userManager.UpdateAsync(user);
+            }
+            else throw new UnauthorizedAccessException("OTP Not Valid");
+
+        }
+
         private async Task<string> CreateJwtToken(CorrectUser user)
         {
 
@@ -95,40 +143,112 @@ namespace Persistence.Reposetories.ExternalRepository
                 .Include(or => or.Role).First(u => u.Email == user.Email);
             return (user.Id, await CreateJwtToken(user), user.Name);
         }
-
-        public Task RegesterAsync(string name, string email, string password)
+        public async Task RegesterAsync(string name, string email, string password)
         {
-            throw new NotImplementedException();
+            if (await _userManager.FindByEmailAsync(email) is not null)
+                throw new AlreadyExistException(name);
+
+            var correctUser = new CorrectUser()
+            {
+                Email = email,
+                Name = name,
+                UserName = email
+            };
+
+            var result = await _userManager.CreateAsync(correctUser, password);
+            if (!result.Succeeded)
+                throw new IdentityException(FillError(result));
         }
 
-        public Task<string> LogInAsync(string email, string password)
+
+        public async Task<string> LogInAsync(string email, string password)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(email);
+            user = _userManager.Users
+                .Include(u => u.OrganizationRules)
+                .FirstOrDefault(user => user.Email == email);
+            if (user is null || !await _userManager.CheckPasswordAsync(user, password))
+                throw new NotFoundException(email);
+
+            var res = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+            if (res.IsNotAllowed)
+                throw new NotAllowedException("User");
+            if (res.Succeeded)
+            {
+                var jwtSecurityToken = await CreateJwtToken(user);
+
+                return jwtSecurityToken;
+            }
+            throw new IdentityException("Exception with Login");
         }
 
-        public Task RestPasswordAsync(string otp, string token, string userId, string newPassword)
+        public async Task RestPasswordAsync(string otp, string token, string UserId, string newPassword)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(UserId);
+            if (user == null)
+                throw new NotFoundException("User");
+            await ValidateOTP(user, otp);
+            //if (user.OTP == otp)
+            //{
+            //    user.OTP = null;
+            //    await _userManager.UpdateAsync(user);
+
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+            if (!result.Succeeded) throw new IdentityException(FillError(result));
+        }
+        public async Task<string> RestPasswordAsync(string email, string otp)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new NotFoundException("User");
+
+            //user.OTP = otp;
+            //await _userManager.UpdateAsync(user);
+            await SaveOTP(user.Id, otp);
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            return token;
         }
 
-        public Task<string> RestPasswordAsync(string email, string otp)
+
+        public async Task UpdatePasswordAsync(string userId, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                throw new NotFoundException("User");
+
+            if (!await _userManager.CheckPasswordAsync(user, oldPassword))
+                throw new UnauthorizedAccessException("Old password is incorrect.");
+
+            // Change the password to the new one
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (!result.Succeeded)
+                throw new IdentityException(FillError(result));
         }
 
-        public Task UpdatePasswordAsync(string userId, string oldPassword, string newPassword)
+        public async Task UpdateUserAsync(IUser user)
         {
-            throw new NotImplementedException();
-        }
+            var existingUser = await _userManager.FindByIdAsync(user.Id);
+            if (existingUser == null)
+                throw new NotFoundException(user.Name);
 
-        public Task UpdateUserAsync(IUser user)
-        {
-            throw new NotImplementedException();
-        }
+            existingUser = ToCorrectUser(user);
 
-        public Task DeleteUserAsync(IUser user)
+            var result = await _userManager.UpdateAsync(existingUser);
+            if (!result.Succeeded)
+                throw new IdentityException(FillError(result));
+        }
+        public async Task DeleteUserAsync(IUser user)
         {
-            throw new NotImplementedException();
+            var userEntity = await _userManager.FindByIdAsync(user.Id);
+            if (userEntity == null)
+                throw new NotFoundException(user.Name);
+
+            var result = await _userManager.DeleteAsync(userEntity);
+            if (!result.Succeeded)
+                throw new IdentityException(FillError(result));
         }
     }
 }
