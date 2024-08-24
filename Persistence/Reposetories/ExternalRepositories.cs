@@ -13,6 +13,7 @@ namespace Persistence.Reposetories
         private readonly IConfiguration _configuration;
         private readonly UserManager<CorrectUser> _userManager;
         private readonly JWTConfiguration _jwt;
+        
         public ExternalRepositories( IConfiguration configuration, UserManager<CorrectUser> userManager, JWTConfiguration jwt)
         {
             //_authRepository=authRepository;
