@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contract.AuthDtos
 {
-    public class Regestreation
+    public class RegestreationDto
     {
         [Required]
         public required string Name { get; set; }

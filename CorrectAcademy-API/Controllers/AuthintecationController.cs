@@ -15,26 +15,6 @@ namespace CorrectAcademy_API.Controllers
         {
             _service = service;
         }
-
-        [HttpPost("ExternalAuthentication")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
-        public async Task<IActionResult> ExternalAsync(GoogleAuthDto model)
-        {
-            try
-            {
-                var result = await _service.AuthService.AuthenticationWithGoogle(model);
-                return Ok(new { UserID = result.Item1, Token = result.Item2, Name = result.Item3 });
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
         [HttpPost("ConfirmEmail")]
         public async Task<IActionResult> Confirm(string email)
         {
@@ -49,9 +29,8 @@ namespace CorrectAcademy_API.Controllers
                 return StatusCode(505, ex.Message);
             }
         }
-
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterAsync(RegestrationDto model)
+        public async Task<IActionResult> RegisterAsync(RegestreationDto model)
         {
             try
             {
@@ -79,20 +58,12 @@ namespace CorrectAcademy_API.Controllers
             {
                 return Conflict(ex.Message);
             }
-            catch (IdentityException ex)
-            {
-                return Problem(ex.Message);
-            }
-            catch (PropertyException ex)
-            {
-                return Problem(ex.Message);
-            }
+           
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
-
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignInAsync(LoginDto model)
         {
@@ -122,14 +93,7 @@ namespace CorrectAcademy_API.Controllers
             {
                 return Conflict(ex.Message);
             }
-            catch (IdentityException ex)
-            {
-                return Problem(ex.Message);
-            }
-            catch (PropertyException ex)
-            {
-                return Problem(ex.Message);
-            }
+            
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -137,49 +101,24 @@ namespace CorrectAcademy_API.Controllers
         }
 
         [HttpPost("ExternalAuthentication")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public async Task<IActionResult> ExternalAsync(GoogleAuthDto model)
         {
             try
             {
-                var result = await _service.AuthService.AuthinticationWithGoogle(model);
-                return Ok(result);
+                var result = await _service.AuthService.AuthenticationWithGoogle(model);
+                return Ok(new { UserID = result.Item1, Token = result.Item2, Name = result.Item3 });
             }
             catch (UnauthorizedAccessException ex)
             {
                 return Unauthorized(ex.Message);
-            }
-            catch (NotAllowedException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (SettingsNotFoundException ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (AlreadyExistException ex)
-            {
-                return Conflict(ex.Message);
-            }
-            catch (IdentityException ex)
-            {
-                return Problem(ex.Message);
-            }
-            catch (PropertyException ex)
-            {
-                return Problem(ex.Message);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
-
-
         [HttpPost("ForgetPassword")]
         public async Task<IActionResult> ResetPassword(string email)
         {
@@ -212,14 +151,7 @@ namespace CorrectAcademy_API.Controllers
             {
                 return Conflict(ex.Message);
             }
-            catch (IdentityException ex)
-            {
-                return Problem(ex.Message);
-            }
-            catch (PropertyException ex)
-            {
-                return Problem(ex.Message);
-            }
+           
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -256,14 +188,7 @@ namespace CorrectAcademy_API.Controllers
             {
                 return Conflict(ex.Message);
             }
-            catch (IdentityException ex)
-            {
-                return Problem(ex.Message);
-            }
-            catch (PropertyException ex)
-            {
-                return Problem(ex.Message);
-            }
+           
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
