@@ -10,6 +10,5 @@ namespace Domain.IRepositories.ExternalRepositories
     {
         Task SendConfirmation(string user, string otp);
         Task SendResetPassword(string user, string otp);
-        Task SendInvitation(string userEmail);
     }
 }

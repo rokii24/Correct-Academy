@@ -10,6 +10,6 @@ namespace Service.DataServices
     {
         Task SendConfirmationEmail(string userEmail, string otp);
         Task SendResetPassword(string userEmail, string otp);
-        Task SendInvitation(string userEmail);
+        //Task SendInvitation(string userEmail);
     }
 }
