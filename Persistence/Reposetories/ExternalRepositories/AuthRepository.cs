@@ -1,4 +1,5 @@
-﻿using Domain.IRepositories.ExternalRepositories;
+﻿using Domain.Entities.AuthenticationEntities;
+using Domain.IRepositories.ExternalRepositories;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -93,6 +94,41 @@ namespace Persistence.Reposetories.ExternalRepository
             else user = _userManager.Users
                 .Include(or => or.Role).First(u => u.Email == user.Email);
             return (user.Id, await CreateJwtToken(user), user.Name);
+        }
+
+        public Task RegesterAsync(string name, string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> LogInAsync(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RestPasswordAsync(string otp, string token, string userId, string newPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> RestPasswordAsync(string email, string otp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdatePasswordAsync(string userId, string oldPassword, string newPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateUserAsync(IUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteUserAsync(IUser user)
+        {
+            throw new NotImplementedException();
         }
     }
 }
