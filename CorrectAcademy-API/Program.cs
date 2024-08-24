@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Persistence.ExternalConfigurations;
 using Persistence.Reposetories.ExternalRepository;
+using CorrectAcademy_API.Hubs;
 
 namespace CorrectAcademy_API
 {
@@ -30,7 +31,7 @@ namespace CorrectAcademy_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             #region Db Context
-            var connection = builder.Configuration.GetConnectionString("SoomCon");
+            var connection = builder.Configuration.GetConnectionString("MohCon");
             builder.Services
                 .AddDbContext<CorrectAcademyContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Persistence")));
 
@@ -68,6 +69,13 @@ namespace CorrectAcademy_API
             builder.Services.Configure<GoogleConfiguration>(builder.Configuration.GetSection("Google"));
             //builder.Services.Configure<BraintreeSetting>(builder.Configuration.GetSection("Payment"));
             #endregion
+           
+            builder.WebHost.ConfigureKestrel(serverOptions =>
+            {
+                serverOptions.Limits.MaxRequestBodySize = long.MaxValue;
+            });
+            
+            builder.Services.AddSignalR();
             var app = builder.Build();
             AddRoles(app);
             
@@ -85,7 +93,7 @@ namespace CorrectAcademy_API
 
 
             app.MapControllers();
-
+            app.MapHub<CorrectHub>("Hub");
             app.Run();
         }
     }
