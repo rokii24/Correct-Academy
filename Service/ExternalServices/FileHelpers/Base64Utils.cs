@@ -4,15 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Service.ExternalServices.FileHelpers
 {
     public static class Base64Utils
     {
+        private static string GetValue(string data)
+        {
+            if (FileUtility.VedioPrefixes.TryGetValue(data.ToUpper(), out string? value))
+                return value;
+            throw new Exception("");
+        }
         public static string GetImageMimeTypeFromBase64(string base64String)
         {
-            var data = base64String.Substring(0, 5);
-            return FileUtility.ImagePrefixes[data.ToUpper()];
+            return GetValue(base64String.Substring(0, 5));
         }
 
         /// <summary>
@@ -22,8 +28,7 @@ namespace Service.ExternalServices.FileHelpers
         /// <returns></returns>
         public static string GetVoiceMimeTypeFromBase64(string base64String)
         {
-            var data = base64String.Substring(0, 5); //
-            return FileUtility.VoicePrefixes[data.ToUpper()];
+            return GetValue(base64String.Substring(0, 5)); //
         }
        
         /// <summary>
@@ -33,13 +38,11 @@ namespace Service.ExternalServices.FileHelpers
         /// <returns></returns>
         public static string GetVideoMimeTypeFromBase64(string base64String)
         {
-            var data = base64String.Substring(0, 5); //
-            return FileUtility.VedioPrefixes[data.ToUpper()];
+            return GetValue(base64String.Substring(0, 5));
         }
         public static string GetPdfMimeTypeFromBase64(string base64String)
         {
-            var data = base64String.Substring(0, 11);
-            return FileUtility.PdfPrefixes[data.ToUpper()];
+            return GetValue(base64String.Substring(0, 11));
         }
     }
 }

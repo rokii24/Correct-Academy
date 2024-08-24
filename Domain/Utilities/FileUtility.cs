@@ -63,7 +63,7 @@ namespace Domain.Utilities
         public const string OggVideo = "video/ogg";
         #endregion
 
-        #region Voice 
+        #region Voice
         public static readonly Dictionary<string, string> VoicePrefixes =
           new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
           {
