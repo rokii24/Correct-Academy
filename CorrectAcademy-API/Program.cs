@@ -6,6 +6,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Persistence.ExternalConfigurations;
 using Persistence.Reposetories.ExternalRepository;
+using Domain.IRepositories.ExternalRepositories;
+using Persistence.Reposetories;
+using Domain.IRepositories.DataRepository;
+using Persistence.Repositories.DataRepository;
+using Service.Abstraction.IExternalServices;
+using Service.ExternalServices;
+using CorrectAcademy_API.Hubs;
 
 namespace CorrectAcademy_API
 {
@@ -29,6 +36,7 @@ namespace CorrectAcademy_API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             #region Db Context
             var connection = builder.Configuration.GetConnectionString("SoomCon");
             builder.Services
@@ -38,7 +46,6 @@ namespace CorrectAcademy_API
                 .AddEntityFrameworkStores<CorrectAcademyContext>()
                 .AddDefaultTokenProviders();
             #endregion
-
             #region JWT Auth
             builder.Services.AddAuthentication(options =>
             {
@@ -63,11 +70,23 @@ namespace CorrectAcademy_API
             builder.Services.AddAuthorization();
             #endregion
             #region Configurations
-            // builder.Services.Configure<JWTConfiguration>(builder.Configuration.GetSection("Jwt"));
+          //  builder.Services.Configure<JWTConfiguration>(builder.Configuration.GetSection("Jwt"));
+            var jwtConfig = builder.Configuration.GetSection("Jwt").Get<JWTConfiguration>();
+            builder.Services.AddSingleton(jwtConfig);
             //  builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
             builder.Services.Configure<GoogleConfiguration>(builder.Configuration.GetSection("Google"));
             //builder.Services.Configure<BraintreeSetting>(builder.Configuration.GetSection("Payment"));
             #endregion
+            #region  Scopes
+            builder.Services.AddScoped<IExternalRepository, ExternalRepositories>();
+            builder.Services.AddScoped<IAdminDataRepository, AdminDataRepository>();
+          
+           // builder.Services.AddScoped<IAdminDataService, AdminDataService>();
+            builder.Services.AddScoped<IExternalService, ExternalService>();
+            //   builder.Services.AddScoped<IPaymentService, PaymentService>();
+            builder.Services.AddScoped<CorrectHub>();
+            #endregion
+
             var app = builder.Build();
             AddRoles(app);
             

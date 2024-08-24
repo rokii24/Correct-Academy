@@ -13,7 +13,8 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
     {
         private readonly IHubContext<CorrectHub, IHubMethods> _hubContext;
 
-        public ChatController(IHubContext<CorrectHub, IHubMethods> hubContext)
+        public ChatController(IHubContext<CorrectHub
+            , IHubMethods> hubContext)
         {
             _hubContext = hubContext;
         }
@@ -27,8 +28,8 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
                 .ReceiveTextMessage(modal.UserId, modal.Message);
                 return Ok();
             }
-            catch (Exception ex) 
-            { 
+            catch (Exception ex)
+            {
                 return StatusCode(501, ex.Message);
             }
         }
@@ -39,7 +40,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 await _hubContext.Clients.Group(modal.ClassId)
-                .ReceiveTextMessage(modal.UserId, modal.Message);
+                .SendTextMessage(modal.UserId, modal.Message);
                 return Ok();
             }
             catch (Exception ex)

@@ -19,7 +19,7 @@ namespace Persistence.Configurations
             builder.HasMany(ur => (ICollection<CorrectInstructor>)ur.Instructor)
               .WithMany(u => u.Courses);
 
-               builder.HasMany(ur => ur.UsersClasses)
+               builder.HasMany(ur => ur.Classes)
               .WithOne(u => u.Course);
         }
     }
