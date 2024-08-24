@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="IDataServices\" />
-    <Folder Include="IExternalServices\" />
   </ItemGroup>
 
   <ItemGroup>
