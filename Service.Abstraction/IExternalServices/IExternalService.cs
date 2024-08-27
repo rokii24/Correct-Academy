@@ -5,6 +5,7 @@ namespace Service.Abstraction.IExternalServices
     {
         IAuthService AuthService { get; }
         IEmailService EmailService { get; }
+        IFileService FileService { get; }
 
         string GenerateOtp();
     }

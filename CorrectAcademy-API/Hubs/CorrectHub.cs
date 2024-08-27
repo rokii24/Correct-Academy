@@ -6,10 +6,14 @@ namespace CorrectAcademy_API.Hubs
     public class CorrectHub : Hub<IHubMethods>
     {
         public override Task OnConnectedAsync()
-        {
-            // Add User To all Classes Groups
-            
+        {   
             var classIds = new List<string>();
+
+
+            // Add User To all Classes Groups
+            classIds.ForEach( async cl => 
+            await Groups.AddToGroupAsync(Context.ConnectionId, cl));
+
             // Notify Users in Classes Chat that user is currently connected  
             Clients.Groups(classIds).UserConnected(Context.UserIdentifier!); 
             

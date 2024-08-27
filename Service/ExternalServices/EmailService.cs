@@ -1,6 +1,5 @@
 ﻿using Domain.IRepositories.ExternalRepositories;
 using Service.Abstraction.IExternalServices;
-using Service.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;

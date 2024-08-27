@@ -10,8 +10,9 @@ namespace Domain.Enums
     {
         Text,
         Image,
-        Voice,
-        
+        Voice, Signal,
+
+
         Video,
         PDF,
     }
