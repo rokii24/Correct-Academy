@@ -1,12 +1,11 @@
 ﻿using Domain.IRepositories.ExternalRepositories;
+using Service.Abstraction.IExternalServices;
 using Service.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Service.ExternalServices.EmailService;
-
 namespace Service.ExternalServices
 {
     public class EmailService: IEmailService
@@ -24,11 +23,6 @@ namespace Service.ExternalServices
             {
                 return _repository.EmailRepository.SendConfirmation(userEmail, otp);
 
-            }
-
-            public async Task SendInvitation(string userEmail)
-            {
-                await _repository.EmailRepository.SendInvitation(userEmail);
             }
 
             public Task SendResetPassword(string userEmail, string otp)

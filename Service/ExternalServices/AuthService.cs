@@ -29,5 +29,35 @@ namespace Service.ExternalServices
 
             return userToken!;
         }
+
+        public Task DeleteUserAsync(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AuthDto> LogInAsync(LoginDto model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RegesterAsync(RegestreationDto model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OtpTokenDto> RestPassword(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RestPassword(ForgetPasswordDto forget)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdatePasswordAsync(ChangePasswordDto changePassword)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

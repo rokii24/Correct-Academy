@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
 
-namespace Persistence.Reposetories
+namespace Persistence.Reposetories.ExternalRepositories.ExternalRepositories
 {
-    public class EmailRepository :IEmailRepository
+    public class EmailRepository : IEmailRepository
     {
         private readonly EmailConfiguration _configuration;
         public EmailRepository(EmailConfiguration configuration)

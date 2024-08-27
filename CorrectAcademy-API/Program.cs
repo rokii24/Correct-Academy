@@ -7,12 +7,12 @@ using System.Text;
 using Persistence.ExternalConfigurations;
 using Persistence.Reposetories.ExternalRepository;
 using Domain.IRepositories.ExternalRepositories;
-using Persistence.Reposetories;
 using Domain.IRepositories.DataRepository;
 using Persistence.Repositories.DataRepository;
 using Service.Abstraction.IExternalServices;
 using Service.ExternalServices;
 using CorrectAcademy_API.Hubs;
+using Persistence.Reposetories.ExternalRepositories;
 
 namespace CorrectAcademy_API
 {

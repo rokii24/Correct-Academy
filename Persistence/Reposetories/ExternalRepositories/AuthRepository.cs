@@ -25,6 +25,11 @@ namespace Persistence.Reposetories.ExternalRepository
         private readonly SignInManager<CorrectUser> _signInManager;
 
         private readonly JWTConfiguration _jwt;
+
+        public UserManager<CorrectUser> UserManager { get; }
+        public GoogleConfiguration GoogleConfiguration { get; }
+        public JWTConfiguration Jwt { get; }
+
         public AuthRepository(SignInManager<CorrectUser> signInManager,GoogleConfiguration googleConfiguration, UserManager<CorrectUser> userManager, JWTConfiguration jwt)
         {
             _googleConfiguration = googleConfiguration;
@@ -33,6 +38,14 @@ namespace Persistence.Reposetories.ExternalRepository
 
             _jwt = jwt;
         }
+
+        public AuthRepository(UserManager<CorrectUser> userManager, GoogleConfiguration googleConfiguration, JWTConfiguration jwt)
+        {
+            UserManager = userManager;
+            GoogleConfiguration = googleConfiguration;
+            Jwt = jwt;
+        }
+
         private async Task SaveOTP(string userId, string otp, int mints = 3)
         {
             var user = await _userManager.FindByIdAsync(userId);
