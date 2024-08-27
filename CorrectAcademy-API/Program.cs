@@ -13,6 +13,7 @@ using Service.Abstraction.IExternalServices;
 using Service.ExternalServices;
 using CorrectAcademy_API.Hubs;
 using Persistence.Reposetories.ExternalRepositories;
+using Persistence.Reposetories;
 
 namespace CorrectAcademy_API
 {
@@ -78,7 +79,7 @@ namespace CorrectAcademy_API
             //builder.Services.Configure<BraintreeSetting>(builder.Configuration.GetSection("Payment"));
             #endregion
             #region  Scopes
-            builder.Services.AddScoped<IExternalRepository, ExternalRepositories>();
+            builder.Services.AddScoped<IExternalRepository, ExternalRepositorie>();
             builder.Services.AddScoped<IAdminDataRepository, AdminDataRepository>();
           
            // builder.Services.AddScoped<IAdminDataService, AdminDataService>();

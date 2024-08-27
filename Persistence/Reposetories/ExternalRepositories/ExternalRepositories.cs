@@ -5,21 +5,21 @@ using Persistence.Context;
 using Persistence.ExternalConfigurations;
 using Persistence.Reposetories.ExternalRepository;
 
-namespace Persistence.Reposetories.ExternalRepositories
+namespace Persistence.Reposetories
 {
-    public class ExternalRepositories : IExternalRepository
+    public class ExternalRepositorie : IExternalRepository
     {
         private IAuthRepository _authRepository = null!;
         private readonly IConfiguration _configuration;
         private readonly UserManager<CorrectUser> _userManager;
         private readonly JWTConfiguration _jwt;
-
-        public ExternalRepositories(IConfiguration configuration, UserManager<CorrectUser> userManager, JWTConfiguration jwt)
+        
+        public ExternalRepositorie( IConfiguration configuration, UserManager<CorrectUser> userManager, JWTConfiguration jwt)
         {
             //_authRepository=authRepository;
-            _configuration = configuration;
-            _userManager = userManager;
-            _jwt = jwt;
+            _configuration=configuration;
+            _userManager=userManager;
+            _jwt=jwt;
         }
 
         public IEmailRepository EmailRepository => throw new NotImplementedException();
@@ -45,5 +45,5 @@ namespace Persistence.Reposetories.ExternalRepositories
             }
         }
     }
-
+    
 }

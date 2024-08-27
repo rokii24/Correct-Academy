@@ -14,7 +14,7 @@ namespace Persistence.Context
     {
 
         public int Age { get; set; }
-        public Gender Gender { get; set; }
+        public Gender Gender { get; set; } 
         public string? BackgroundImage { get; set; }
         public ICollection<Certificate>? Certificates { get; set; }
         public ICollection<Course> Courses { get; set; } = null!;
