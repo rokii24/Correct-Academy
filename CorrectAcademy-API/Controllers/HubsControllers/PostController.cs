@@ -48,7 +48,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
                 // Add comment reply into DB
                 // 
                 await _hubContext.Clients.Group(modal.CommentId)
-                .ReceiveCommentReply(modal.CommentId, modal.Message , MessageType.Text);
+                .ReceiveCommentReply(modal.UserId ,modal.CommentId, modal.Message , MessageType.Text);
                 return Ok();
             }
             catch (Exception ex)
