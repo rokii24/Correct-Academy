@@ -9,7 +9,7 @@ namespace Domain.Utilities
     public static class ConfigUtility
     {
         public const string ChatFolderName = "Chat";
-        public const string CommentFolderName = "Comment";
-        public const string CommentReplyName = "CommentReply";
+        //public const string CommentFolderName = "Comment";
+        //public const string CommentReplyName = "CommentReply";
     }
 }

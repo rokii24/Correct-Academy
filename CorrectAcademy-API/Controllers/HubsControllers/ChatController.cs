@@ -44,6 +44,22 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
                 return StatusCode(501, ex.Message);
             }
         }
+        [HttpPost("SendTextReply")]
+        public async Task<IActionResult> SendTextReply(MessageReplyDto modal)
+        {
+            try
+            {
+                // Add Message into DB
+                // 
+                await _hubContext.Clients.Group(modal.ClassId)
+                .ReceiveReplyMessage(modal.UserId,modal.MessageId, modal.Message, MessageType.Text);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
         [HttpPost("SendImage")]
         public async Task<IActionResult> SendImageMessage(MessageDto modal)
         {
@@ -51,13 +67,33 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add Message into DB
                 
-                string path = Path.Combine(modal.ClassId,
+                string path = Path.Combine(modal.AcademyId,modal.ClassId,
                     ConfigUtility.ChatFolderName, "messageId");
                 await _externalService.FileService.SaveImage(path, modal.Message);
                 
                 await _hubContext.Clients.Group(modal.ClassId)
                 .ReceiveMessage(modal.UserId, path, MessageType.Image);
                 
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
+        [HttpPost("SendImageReply")]
+        public async Task<IActionResult> SendImageReply(MessageReplyDto modal)
+        {
+            try
+            {
+                // Add Message into DB
+                // 
+                string path = Path.Combine(modal.AcademyId, modal.ClassId,
+                    ConfigUtility.ChatFolderName, "messageId");
+                await _externalService.FileService.SaveImage(path, modal.Message);
+
+                await _hubContext.Clients.Group(modal.ClassId)
+                .ReceiveReplyMessage(modal.UserId, modal.MessageId, modal.Message, MessageType.Image);
                 return Ok();
             }
             catch (Exception ex)
@@ -72,7 +108,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add Message into DB
 
-                string path = Path.Combine(modal.ClassId,
+                string path = Path.Combine(modal.AcademyId,modal.ClassId,
                     ConfigUtility.ChatFolderName, "messageId");
                 await _externalService.FileService.SaveVideo(path, modal.Message);
 
@@ -86,13 +122,33 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
                 return StatusCode(501, ex.Message);
             }
         }
+        [HttpPost("SendVideoReply")]
+        public async Task<IActionResult> SendVideoReply(MessageReplyDto modal)
+        {
+            try
+            {
+                // Add Message into DB
+                // 
+                string path = Path.Combine(modal.AcademyId, modal.ClassId,
+                    ConfigUtility.ChatFolderName, "messageId");
+                await _externalService.FileService.SaveVideo(path, modal.Message);
+
+                await _hubContext.Clients.Group(modal.ClassId)
+                .ReceiveReplyMessage(modal.UserId, modal.MessageId, modal.Message, MessageType.Video);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
         [HttpPost("SendPdf")]
         public async Task<IActionResult> SendPdfMessage(MessageDto messageDto)
         {
             try
             {
                 // Add Message
-                string path = Path.Combine(messageDto.ClassId,
+                string path = Path.Combine(messageDto.AcademyId,messageDto.ClassId,
                     ConfigUtility.ChatFolderName, "MessageId");
                 await _externalService.FileService.SavePdf(path, messageDto.Message);
                 await _hubContext.Clients.Group(messageDto.ClassId).
@@ -105,13 +161,33 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             }
 
         }
+        [HttpPost("SendPdfReply")]
+        public async Task<IActionResult> SendPdfReply(MessageReplyDto modal)
+        {
+            try
+            {
+                // Add Message into DB
+                // 
+                string path = Path.Combine(modal.AcademyId, modal.ClassId,
+                    ConfigUtility.ChatFolderName, "messageId");
+                await _externalService.FileService.SavePdf(path, modal.Message);
+
+                await _hubContext.Clients.Group(modal.ClassId)
+                .ReceiveReplyMessage(modal.UserId, modal.MessageId, modal.Message, MessageType.PDF);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
         [HttpPost("SendVoice")]
         public async Task<IActionResult> SendVoiceMessage(MessageDto messageDto)
         {
             try
             {
                 // Add Message
-                string path = Path.Combine(messageDto.ClassId,
+                string path = Path.Combine(messageDto.AcademyId, messageDto.ClassId,
                     ConfigUtility.ChatFolderName, "MessageId");
                 await _externalService.FileService.SaveVoice(path, messageDto.Message);
                 await _hubContext.Clients.Group(messageDto.ClassId).
@@ -124,7 +200,26 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             }
 
         }
+        [HttpPost("SendVoiceReply")]
+        public async Task<IActionResult> SendVoiceReply(MessageReplyDto modal)
+        {
+            try
+            {
+                // Add Message into DB
+                // 
+                string path = Path.Combine(modal.AcademyId, modal.ClassId,
+                    ConfigUtility.ChatFolderName, "messageId");
+                await _externalService.FileService.SaveVoice(path, modal.Message);
 
+                await _hubContext.Clients.Group(modal.ClassId)
+                .ReceiveReplyMessage(modal.UserId, modal.MessageId, modal.Message, MessageType.Voice);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
         [HttpPost("SendSignal")]
         public async Task<IActionResult> SendSignalMessage(MessageDto messageDto)
         {

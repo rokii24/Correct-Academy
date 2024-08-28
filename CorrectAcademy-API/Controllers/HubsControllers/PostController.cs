@@ -64,7 +64,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add comment into DB
                 // 
-                var path = Path.Combine(modal.AcademyId,modal.PostId , ConfigUtility.CommentFolderName ,"CommentId" );
+                var path = Path.Combine(modal.AcademyId,modal.PostId  ,"CommentId" );
                 await _externalService.FileService.SaveImage(path,modal.Message);
                 await _hubContext.Clients.Group(modal.PostId)
                 .ReceiveComment(modal.UserId, path, MessageType.Image);
@@ -82,10 +82,10 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add comment reply into DB
                 // 
-                var path = Path.Combine(modal.AcademyId, modal.PostId , modal.CommentId, ConfigUtility.CommentReplyName, "CommentId");
+                var path = Path.Combine(modal.AcademyId, modal.PostId ,"CommentId");
                 await _externalService.FileService.SaveImage(path, modal.Message);
                 await _hubContext.Clients.Group(modal.CommentId)
-                .ReceiveCommentReply(modal.CommentId, path , MessageType.Image);
+                .ReceiveCommentReply(modal.UserId, modal.CommentId, path , MessageType.Image);
                 return Ok();
             }
             catch (Exception ex)
@@ -100,7 +100,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add comment into DB
                 // 
-                var path = Path.Combine(modal.AcademyId, modal.PostId, ConfigUtility.CommentFolderName, "CommentId");
+                var path = Path.Combine(modal.AcademyId, modal.PostId, "CommentId");
                 await _externalService.FileService.SaveVideo(path, modal.Message);
                 await _hubContext.Clients.Group(modal.PostId)
                 .ReceiveComment(modal.UserId, path, MessageType.Video);
@@ -119,10 +119,10 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add comment reply into DB
                 // 
-                var path = Path.Combine(modal.AcademyId, modal.PostId, modal.CommentId, ConfigUtility.CommentReplyName, "CommentId");
+                var path = Path.Combine(modal.AcademyId, modal.PostId, "CommentId");
                 await _externalService.FileService.SaveVideo(path, modal.Message);
                 await _hubContext.Clients.Group(modal.CommentId)
-                .ReceiveCommentReply(modal.CommentId, path, MessageType.Image);
+                .ReceiveCommentReply(modal.UserId, modal.CommentId, path, MessageType.Video);
                 return Ok();
             }
             catch (Exception ex)
@@ -137,7 +137,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add comment into DB
                 // 
-                var path = Path.Combine(modal.AcademyId, modal.PostId, ConfigUtility.CommentFolderName, "CommentId");
+                var path = Path.Combine(modal.AcademyId, modal.PostId, "CommentId");
                 await _externalService.FileService.SaveVoice(path, modal.Message);
                 await _hubContext.Clients.Group(modal.PostId)
                 .ReceiveComment(modal.UserId, path , MessageType.Voice);
@@ -155,10 +155,10 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add comment reply into DB
                 // 
-                var path = Path.Combine(modal.AcademyId, modal.PostId, modal.CommentId, ConfigUtility.CommentReplyName, "CommentId");
+                var path = Path.Combine(modal.AcademyId, modal.PostId, "CommentId");
                 await _externalService.FileService.SaveVoice(path, modal.Message);
                 await _hubContext.Clients.Group(modal.CommentId)
-                .ReceiveCommentReply(modal.CommentId, path, MessageType.Image);
+                .ReceiveCommentReply(modal.UserId, modal.CommentId, path, MessageType.Voice);
                 return Ok();
             }
             catch (Exception ex)
@@ -173,7 +173,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add comment into DB
                 // 
-                var path = Path.Combine(modal.AcademyId, modal.PostId, ConfigUtility.CommentFolderName, "CommentId");
+                var path = Path.Combine(modal.AcademyId, modal.PostId, "CommentId");
                 await _externalService.FileService.SavePdf(path, modal.Message);
                 await _hubContext.Clients.Group(modal.PostId)
                 .ReceiveComment(modal.UserId, path, MessageType.PDF);
@@ -191,10 +191,10 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             {
                 // Add comment reply into DB
                 // 
-                var path = Path.Combine(modal.AcademyId, modal.PostId, modal.CommentId, ConfigUtility.CommentReplyName, "CommentId");
+                var path = Path.Combine(modal.AcademyId, modal.PostId, "CommentId");
                 await _externalService.FileService.SavePdf(path, modal.Message);
                 await _hubContext.Clients.Group(modal.CommentId)
-                .ReceiveCommentReply(modal.CommentId, path, MessageType.Image);
+                .ReceiveCommentReply(modal.UserId ,modal.CommentId, path, MessageType.PDF);
                 return Ok();
             }
             catch (Exception ex)

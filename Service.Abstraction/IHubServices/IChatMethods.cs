@@ -10,9 +10,9 @@ namespace Service.Abstraction.IHubServices
     public partial interface IHubMethods
     {
         Task ReceiveMessage( string userId, string message, MessageType type);
-        Task ReceiveReplyMessage(Guid messageId, string message);
+        Task ReceiveReplyMessage(string userId,string messageId, string message, MessageType type);
         Task ReceiveComment(string userId, string message, MessageType type);
-        Task ReceiveCommentReply(string messageId, string message, MessageType type);
+        Task ReceiveCommentReply(string userId,string messageId, string message, MessageType type);
 
     }
 }
