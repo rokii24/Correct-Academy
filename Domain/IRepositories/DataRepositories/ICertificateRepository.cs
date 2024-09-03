@@ -10,7 +10,7 @@ namespace Domain.IRepositories.DataRepositories
     public interface ICertificateRepository
     {
 
-        Task<Certificate> GetByIdAsync(string id);
+        Task<Certificate> GetByIdAsync(Guid id);
         Task<IEnumerable<Certificate>> GetAllAsync();
         Task AddAsync(Certificate certificate);
         Task UpdateAsync(Certificate certificate);

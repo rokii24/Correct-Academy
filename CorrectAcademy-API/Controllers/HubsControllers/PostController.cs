@@ -1,4 +1,5 @@
-﻿using Contract.HubDtos;
+﻿using Contract.AddDtos;
+using Contract.HubDtos;
 using CorrectAcademy_API.Hubs;
 using Domain.Enums;
 using Domain.Utilities;
@@ -24,6 +25,22 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             _externalService=externalService;
         }
 
+        [HttpPost("AddPost")]
+        public async Task<IActionResult> AddPost(AddPostDto modal)
+        {
+            try
+            {
+                // Add comment into DB
+                // 
+                //await _hubContext.Clients.Group(modal.PostId)
+                //.ReceiveComment(modal.UserId, modal.Message, MessageType.Text);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
         [HttpPost("SendText")]
         public async Task<IActionResult> SendTextComment(CommentDto modal)
         {

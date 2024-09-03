@@ -10,6 +10,10 @@ namespace Domain.Entities.DataEntities
     public class Post : BaseEntity
     {
         public string? Description { get; set; }
+        public string? Title { get; set; }
+        public bool IsPublic { get; set; }
+        public DateTime AddingDate { get; set; }
+
         public ICollection<string>? Images { get; set; }
         public string UserId { get; set; } = null!;
         public IUser User { get; set; } = null!;

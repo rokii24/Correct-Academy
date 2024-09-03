@@ -1,6 +1,8 @@
 ﻿using Domain.Entities.DataEntities;
 using Domain.IRepositories.DataRepositories;
 using Google;
+using Microsoft.EntityFrameworkCore;
+using Persistence.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +14,14 @@ namespace Persistence.Reposetories.DAtaReposatoiry
 {
     public class CertificateReposatiory: ICertificateRepository
     {
-            private readonly ApplicationDbContext _context;
+            private readonly CorrectAcademyContext _context;
 
-            public CertificateReposatiory(ApplicationDbContext context)
+            public CertificateReposatiory(CorrectAcademyContext context)
             {
                 _context = context;
             }
 
-            public async Task<Certificate> GetByIdAsync(string id)
+            public async Task<Certificate> GetByIdAsync(Guid id)
             {
                 return await _context.Certificates
                     .Include(c => c.Student)
