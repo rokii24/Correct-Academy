@@ -1,23 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Entities.DataEntities;
+﻿using Domain.Entities.DataEntities;
 using Domain.IRepositories.DataRepositories;
- 
+using Microsoft.EntityFrameworkCore;
+using Persistence.Context;
+
 namespace Persistence.Reposetories.DAtaReposatoiry
 {
     public class CoomentRepository : ICommentRepository
     {
-        public Task Add(Comment entity)
+        public readonly CorrectAcademyContext _context;
+
+        public CoomentRepository(CorrectAcademyContext context)
         {
-            throw new NotImplementedException();
+            _context=context;
+        }
+        public async Task Add(Comment entity)
+        {
+            await _context.Comments.AddAsync(entity);
         }
 
-        public Task Delete(Comment entity)
+        public async Task Delete(Comment entity)
         {
-            throw new NotImplementedException();
+            _context.Comments.Remove(entity);
         }
 
         public Task<ICollection<Comment>> FilterBy(Func<Comment, bool> filter)
@@ -25,19 +28,25 @@ namespace Persistence.Reposetories.DAtaReposatoiry
             throw new NotImplementedException();
         }
 
-        public Task<Comment> Get(Guid id)
+        public async Task<Comment> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+            if (comment == null)
+                throw new Exception("comment Not Found");
+            return comment;
         }
 
-        public Task<ICollection<Comment>> GetAll()
+        public async Task<ICollection<Comment>> GetAll()
         {
-            throw new NotImplementedException();
+            var comments = await _context.Comments.ToListAsync();
+            if (comments == null)
+                throw new Exception("comment Not Found");
+            return comments;
         }
 
-        public Task Update(Comment entity)
+        public async Task Update(Comment entity)
         {
-            throw new NotImplementedException();
+            _context.Comments.Update(entity);
         }
     }
 }

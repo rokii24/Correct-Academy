@@ -1,5 +1,7 @@
 ﻿using Domain.Entities.DataEntities;
 using Domain.IRepositories.DataRepositories;
+using Microsoft.EntityFrameworkCore;
+using Persistence.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,22 @@ namespace Persistence.Reposetories.DAtaReposatoiry
 {
     public class PostRepository : IPostRepository
     {
-        public Task Add(Post entity)
+        public readonly CorrectAcademyContext _context;
+
+        public PostRepository(CorrectAcademyContext context)
         {
-            throw new NotImplementedException();
+            _context=context;
         }
 
-        public Task Delete(Post entity)
+        public async Task Add(Post entity)
         {
-            throw new NotImplementedException();
+            await _context.Posts.AddAsync(entity);
+        }
+
+        public async Task Delete(Post entity)
+        {
+             _context.Posts.Remove(entity);
+
         }
 
         public Task<ICollection<Post>> FilterBy(Func<Post, bool> filter)
@@ -25,19 +35,25 @@ namespace Persistence.Reposetories.DAtaReposatoiry
             throw new NotImplementedException();
         }
 
-        public Task<Post> Get(Guid id)
+        public async Task<Post> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var post = await _context.Posts.FirstOrDefaultAsync(p => p.Id == id);
+            if (post == null)
+                throw new Exception("Post Not Found");
+            return post;    
         }
 
-        public Task<ICollection<Post>> GetAll()
+        public async Task<ICollection<Post>> GetAll()
         {
-            throw new NotImplementedException();
+            var posts = await _context.Posts.ToListAsync();
+            if (posts == null)
+                throw new Exception("Post Not Found");
+            return posts;
         }
 
-        public Task Update(Post entity)
+        public async Task Update(Post entity)
         {
-            throw new NotImplementedException();
+             _context.Posts.Update(entity);
         }
     }
 }
