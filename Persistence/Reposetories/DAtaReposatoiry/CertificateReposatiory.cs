@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Persistence.Reposetories.DAtaReposatoiry.CertificateReposatiory;
+using static Persistence.Reposetories.DataReposatoiry.CertificateReposatiory;
 
-namespace Persistence.Reposetories.DAtaReposatoiry
+namespace Persistence.Reposetories.DataReposatoiry
 {
     public class CertificateReposatiory: ICertificateRepository
     {

@@ -3,13 +3,13 @@ using Domain.IRepositories.DataRepositories;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
-namespace Persistence.Reposetories.DAtaReposatoiry
+namespace Persistence.Reposetories.DataReposatoiry
 {
-    public class CoomentRepository : ICommentRepository
+    public class CommentRepository : ICommentRepository
     {
         public readonly CorrectAcademyContext _context;
 
-        public CoomentRepository(CorrectAcademyContext context)
+        public CommentRepository(CorrectAcademyContext context)
         {
             _context=context;
         }
