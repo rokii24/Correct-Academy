@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AddDtos\" />
     <Folder Include="GetDtos\" />
     <Folder Include="GetDtos\" />
     <Folder Include="Email\" />

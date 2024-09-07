@@ -12,6 +12,7 @@ namespace Domain.IRepositories.DataRepositories
     {
 
         Task<Certificate> GetByIdAsync(int id);
+        Task<Certificate> GetByIdAsync(Guid id);
         Task<IEnumerable<Certificate>> GetAllAsync();
         Task AddAsync(Certificate certificate);
         Task UpdateAsync(Certificate certificate);

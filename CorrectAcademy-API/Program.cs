@@ -14,6 +14,8 @@ using Service.ExternalServices;
 using CorrectAcademy_API.Hubs;
 using Persistence.Reposetories.ExternalRepositories;
 using Persistence.Reposetories;
+using Service.Abstraction.IDataServices;
+using Service.DataServices;
 
 namespace CorrectAcademy_API
 {
@@ -82,7 +84,7 @@ namespace CorrectAcademy_API
             builder.Services.AddScoped<IExternalRepository, ExternalRepositorie>();
             builder.Services.AddScoped<IAdminDataRepository, AdminDataRepository>();
           
-           // builder.Services.AddScoped<IAdminDataService, AdminDataService>();
+            builder.Services.AddScoped<IAdminDataService, AdminDataService>();
             builder.Services.AddScoped<IExternalService, ExternalService>();
             //   builder.Services.AddScoped<IPaymentService, PaymentService>();
             builder.Services.AddScoped<CorrectHub>();
