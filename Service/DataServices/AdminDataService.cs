@@ -16,7 +16,7 @@ namespace Service.DataServices
         public AdminDataService(IAdminDataRepository adminDataRepository)
         {
             _chatService=new ChatService();
-            _postServices=new PostService();
+            _postServices=new PostService(adminDataRepository);
         }
 
         public IChatService ChatService => _chatService;
