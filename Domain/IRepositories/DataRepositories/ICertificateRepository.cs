@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.IRepositories.DataRepositories
 {
-    public interface ICertificateRepository
+    public interface ICertificateRepository 
     {
 
         Task<Certificate> GetByIdAsync(int id);
