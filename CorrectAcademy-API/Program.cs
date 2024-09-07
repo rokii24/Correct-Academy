@@ -39,7 +39,7 @@ namespace CorrectAcademy_API
             builder.Services.AddSwaggerGen();
 
             #region Db Context
-            var connection = builder.Configuration.GetConnectionString("MohCon");
+            var connection = builder.Configuration.GetConnectionString("ShroukCon");
             builder.Services
                 .AddDbContext<CorrectAcademyContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Persistence")));
 

@@ -14,5 +14,6 @@ namespace Domain.Enums
         
         Video,
         PDF,
+        Signal,
     }
 }

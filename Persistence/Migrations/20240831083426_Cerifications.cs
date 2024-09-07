@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDbMigration : Migration
+    public partial class Cerifications : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace Persistence.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -45,7 +45,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -64,7 +64,7 @@ namespace Persistence.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OTP = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -72,7 +72,7 @@ namespace Persistence.Migrations
                     Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OTPValidTo = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RegistrationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Salary = table.Column<float>(type: "real", nullable: true),
@@ -130,7 +130,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -152,7 +152,7 @@ namespace Persistence.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(256)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -169,13 +169,12 @@ namespace Persistence.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(256)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(256)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
@@ -187,14 +186,14 @@ namespace Persistence.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -217,7 +216,7 @@ namespace Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StudentId = table.Column<string>(type: "nvarchar(256)", nullable: false)
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -235,7 +234,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CorrectStudentId = table.Column<string>(type: "nvarchar(256)", nullable: true)
+                    CorrectStudentId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -254,7 +253,7 @@ namespace Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -280,7 +279,7 @@ namespace Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Images = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(256)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -319,7 +318,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     CoursesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InstructorId = table.Column<string>(type: "nvarchar(256)", nullable: false)
+                    InstructorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -345,7 +344,7 @@ namespace Persistence.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Degree = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    InstructorId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    InstructorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -369,13 +368,25 @@ namespace Persistence.Migrations
                 name: "UsersClasses",
                 columns: table => new
                 {
-                    StudentId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InstructorId = table.Column<string>(type: "nvarchar(256)", nullable: false)
+                    InstructorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CorrectInstructorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CorrectStudentId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UsersClasses", x => new { x.InstructorId, x.StudentId, x.CourseId });
+                    table.ForeignKey(
+                        name: "FK_UsersClasses_AspNetUsers_CorrectInstructorId",
+                        column: x => x.CorrectInstructorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_UsersClasses_AspNetUsers_CorrectStudentId",
+                        column: x => x.CorrectStudentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UsersClasses_AspNetUsers_InstructorId",
                         column: x => x.InstructorId,
@@ -387,7 +398,7 @@ namespace Persistence.Migrations
                         column: x => x.StudentId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UsersClasses_Courses_CourseId",
                         column: x => x.CourseId,
@@ -441,7 +452,7 @@ namespace Persistence.Migrations
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -467,7 +478,7 @@ namespace Persistence.Migrations
                 name: "StudentExam",
                 columns: table => new
                 {
-                    StudentId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ExamId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ResultDegree = table.Column<float>(type: "real", nullable: false),
                     AnswerUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -486,7 +497,7 @@ namespace Persistence.Migrations
                         column: x => x.ExamId,
                         principalTable: "Exams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -603,6 +614,16 @@ namespace Persistence.Migrations
                 name: "IX_StudentExam_ExamId",
                 table: "StudentExam",
                 column: "ExamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersClasses_CorrectInstructorId",
+                table: "UsersClasses",
+                column: "CorrectInstructorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersClasses_CorrectStudentId",
+                table: "UsersClasses",
+                column: "CorrectStudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersClasses_CourseId",

@@ -15,6 +15,7 @@ namespace Persistence.Context
         public  CorrectAcademyContext(DbContextOptions options) : base(options)
         {
         }
+        
         public DbSet<CorrectStudent> Students { get; set; }
         public DbSet<CorrectAcademy> Academies { get; set; }
         public DbSet<CorrectInstructor> Instructors { get; set; }

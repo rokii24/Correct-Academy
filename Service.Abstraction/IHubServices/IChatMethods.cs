@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,10 @@ namespace Service.Abstraction.IHubServices
 {
     public partial interface IHubMethods
     {
-        Task SendTextMessage(string classId, string message);
-        Task SendVoiceMessage(string classId, string message);
-        Task SendImageMessage(string classId, string message);
-        Task SendReplyMessage(string classId, Guid messageId, string message);
-
-        Task ReceiveTextMessage( string userId, string message);
-        Task ReceiveVoiceMessage(string userId, string message);
-        Task ReceiveImageMessage(string userId, string message);
-        Task ReceiveReplyMessage(Guid messageId, string message);
+        Task ReceiveMessage( string userId, string message, MessageType type);
+        Task ReceiveReplyMessage(string userId,string messageId, string message, MessageType type);
+        Task ReceiveComment(string userId, string message, MessageType type);
+        Task ReceiveCommentReply(string userId,string messageId, string message, MessageType type);
 
     }
 }

@@ -12,8 +12,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CorrectAcademyContext))]
-    [Migration("20240819084055_EmailMig")]
-    partial class EmailMig
+    [Migration("20240831083426_Cerifications")]
+    partial class Cerifications
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,5 +1,10 @@
 ﻿using Domain.IRepositories.ExternalRepositories;
 using Service.Abstraction.IExternalServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 namespace Service.ExternalServices
 {
     public class EmailService: IEmailService
