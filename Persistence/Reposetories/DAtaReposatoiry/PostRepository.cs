@@ -51,6 +51,14 @@ namespace Persistence.Reposetories.DataReposatoiry
             return posts;
         }
 
+        public async Task<ICollection<Post>> GetAllByUser(string Id)
+        {
+            var posts = await _context.Posts.Where(p=>p.UserId == Id).ToListAsync();
+            if (posts == null)
+                throw new Exception("Post Not Found");
+            return posts;
+        }
+
         public async Task Update(Post entity)
         {
              _context.Posts.Update(entity);

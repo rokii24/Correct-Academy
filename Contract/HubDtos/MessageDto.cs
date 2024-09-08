@@ -29,7 +29,6 @@ namespace Contract.HubDtos
         public required string ClassId { get; set; }
         [Required]
         public required string MessageId { get; set; }
-
         [Required]
         public required string Message { get; set; }
         [Required]

@@ -25,21 +25,27 @@
 ////        public async Task<Certificate> GetByIdAsync(int id)
 ////        {
 
-//﻿using Domain.Entities.DataEntities;
-//using Domain.IRepositories.DataRepositories;
-//using Google;
-//using Microsoft.EntityFrameworkCore;
-//using Persistence.Context;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using static Persistence.Reposetories.DataReposatoiry.CertificateReposatiory;
+using Domain.Entities.DataEntities;
+using Domain.IRepositories.DataRepositories;
+using Google;
+using Microsoft.EntityFrameworkCore;
+using Persistence.Context;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static Persistence.Reposetories.DataReposatoiry.CertificateReposatiory;
 
-//namespace Persistence.Reposetories.DataReposatoiry
-//{
-//    public class CertificateReposatiory: ICertificateRepository
+namespace Persistence.Reposetories.DataReposatoiry
+{
+    public class CertificateReposatiory : ICertificateRepository
+    {
+
+        //            private readonly CorrectAcademyContext _context;
+
+
+    }
 //    {
 //            private readonly CorrectAcademyContext _context;
 

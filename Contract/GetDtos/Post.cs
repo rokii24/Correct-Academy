@@ -5,17 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contract.AddDtos
+namespace Contract.GetDtos
 {
-    public class AddPostDto
+    public class GetPostDto
     {
         public string? Description { get; set; }
         public string? Title { get; set; }
-        public bool IsPublic { get; set; } = false;
+        public bool IsPublic { get; set; }
         public DateTime AddingDate { get; set; }
         public ICollection<string>? Images { get; set; }
         [Required]
         public string UserId { get; set; } = null!;
+        public string? UserName { get; set; }
+        public string? UserImage { get; set; }
     }
-
 }

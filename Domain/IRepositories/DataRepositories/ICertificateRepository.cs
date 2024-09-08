@@ -8,15 +8,10 @@ using System.Threading.Tasks;
 
 namespace Domain.IRepositories.DataRepositories
 {
-    public interface ICertificateRepository 
+    public interface ICertificateRepository : IBaseRepository<Certificate>
     {
 
-        Task<Certificate> GetByIdAsync(int id);
-        Task<Certificate> GetByIdAsync(Guid id);
-        Task<IEnumerable<Certificate>> GetAllAsync();
-        Task AddAsync(Certificate certificate);
-        Task UpdateAsync(Certificate certificate);
-        Task DeleteAsync(string id);
+     
 
         
 
