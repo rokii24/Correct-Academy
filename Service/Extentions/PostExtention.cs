@@ -3,6 +3,7 @@ using Contract.GetDtos;
 using Contract.HubDtos;
 using Domain.Entities.DataEntities;
 using Domain.Enums;
+using Domain.Exceptions;
 
 
 namespace Service.Extentions
@@ -24,6 +25,27 @@ namespace Service.Extentions
 
         public static GetPostDto ToPostDto(this Post Post)
         {
+            var Images = new List<string>();    
+            if (Post.Images !=null)
+            {
+                foreach (var image in Images)
+                {
+
+                    // Ensure the directory exists
+                    if (!File.Exists(image))
+                    {
+                        throw new NotFoundException("The cve directory does not exist.");
+                    }
+
+                    byte[] imageBytes = System.IO.File.ReadAllBytes(image);
+
+
+                    string base64String = Convert.ToBase64String(imageBytes);
+                    Images.Add(base64String);
+
+                }
+            }
+           
             return new GetPostDto
             {
                 AddingDate = Post.AddingDate,
@@ -31,7 +53,7 @@ namespace Service.Extentions
                 IsPublic = Post.IsPublic,
                 Title = Post.Title,
                 UserId = Post.UserId,
-                Images = Post.Images,
+                Images = Images,
                 UserImage = Post.User.UserImage,
                 UserName = Post.User.Name ,
                 PostId = Post.Id ,
@@ -69,6 +91,28 @@ namespace Service.Extentions
                 PostId =Guid.Parse(Dto.PostId),
                 Type = messageType,  
             };
+        }
+        public static GetCommentDto ToCommentDto(this Comment comment)
+        {
+            
+            return new GetCommentDto
+            {
+                Message = comment.Value,
+                UserId= Guid.Parse(comment.UserId),
+                CommentId =comment.Id,
+                Type = comment.Type.ToString(),
+                UserImage = comment.User.UserImage,
+                UserName = comment.User.Name
+            };
+        }
+        public static ICollection<GetCommentDto> ToCommentDto(this ICollection<Comment> Comments)
+        {
+            var GetCommentDto = new List<GetCommentDto>();
+            foreach (var comment in Comments)
+            {
+                GetCommentDto.Add(ToCommentDto(comment));
+            }
+            return GetCommentDto;
         }
 
     }

@@ -10,6 +10,7 @@ namespace Contract.AddDtos
     public class AddPostDto
     {
         public string? Description { get; set; }
+        public string AcademyId { get; set; } = null!;
         public string? Title { get; set; }
         public bool IsPublic { get; set; } = false;
         public DateTime AddingDate { get; set; }
@@ -23,6 +24,10 @@ namespace Contract.AddDtos
         public Guid PostId { get; set; }
         public string? Title { get; set; }
         public bool IsPublic { get; set; }
+    }
+    public class UpdatePostImagesDto
+    {
+        public Guid PostId { get; set; }     
         public ICollection<string>? Images { get; set; }
 
     }

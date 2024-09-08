@@ -12,6 +12,7 @@ namespace Domain.Entities.DataEntities
     {
         public MessageType Type { get; set; }
         public string Value { get; set; } = null!;
+        public DateTime AddingDate { get; set; }
 
         public string UserId { get; set; } = null!;
         public IUser User { get; set; } = null!;
