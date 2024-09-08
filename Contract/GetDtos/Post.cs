@@ -20,4 +20,17 @@ namespace Contract.GetDtos
         public string? UserName { get; set; }
         public string? UserImage { get; set; }
     }
+    public class GetCommentDto
+    {
+        [Required]
+        public required Guid UserId { get; set; }
+        public string? UserName { get; set; }
+        public string? UserImage { get; set; }
+        [Required]
+        public required Guid CommentId { get; set; }
+        [Required]
+        public required string Message { get; set; }
+        public required string Type { get; set; }
+
+    }
 }
