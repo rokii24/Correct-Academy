@@ -10,6 +10,7 @@ namespace Contract.GetDtos
     public class GetPostDto
     {
         public string? Description { get; set; }
+        public Guid PostId { get; set; }
         public string? Title { get; set; }
         public bool IsPublic { get; set; }
         public DateTime AddingDate { get; set; }

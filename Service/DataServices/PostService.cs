@@ -1,11 +1,13 @@
 ﻿using Contract.AddDtos;
 using Contract.GetDtos;
 using Contract.HubDtos;
+using Domain.Entities.DataEntities;
 using Domain.IRepositories.DataRepository;
 using Service.Abstraction.IDataServices;
 using Service.Extentions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,49 +27,96 @@ namespace Service.DataServices
             await _adminDataRepository.PostRepository.Add(Post);
         }
 
-        public Task Add(CommentDto Dto)
+        public async Task Add(CommentDto Dto,string Type)
         {
-            throw new NotImplementedException();
+            var Comment = Dto.ToComment(Type);
+            await _adminDataRepository.CommentRepository.Add(Comment);
         }
 
-        public Task Add(CommentReplyDto Dto)
+        public async Task Add(CommentReplyDto Dto, string Type)
         {
-            throw new NotImplementedException();
+            var CommentReply = Dto.ToCommentReply(Type);
+            await _adminDataRepository.CommentRepository.Add(CommentReply);
+            await _adminDataRepository.SaveChangesAsync();
+            var Comment = await _adminDataRepository.CommentRepository.Get(Guid.Parse(Dto.CommentId));
+            if (Comment == null)
+            {
+                var CommentReplyDelete = await _adminDataRepository.CommentRepository.Get(CommentReply.Id);
+                await _adminDataRepository.CommentRepository.Delete(CommentReplyDelete);
+                await _adminDataRepository.SaveChangesAsync();
+                throw new Exception("Original Comment Not found");        
+            }
+            if (Comment?.Replies  == null)
+            {
+                Comment.Replies = new List<Message>();
+            }
+            Comment?.Replies?.Add(CommentReply);
+            await _adminDataRepository.CommentRepository.Update(Comment);
+            await _adminDataRepository.SaveChangesAsync();
         }
 
-        public Task DeleteComment(Guid CommentId)
+        public async Task DeleteComment(Guid CommentId)
         {
-            throw new NotImplementedException();
+            var CommentReplyDelete = await _adminDataRepository.CommentRepository.Get(CommentId);
+            await _adminDataRepository.CommentRepository.Delete(CommentReplyDelete);
+            await _adminDataRepository.SaveChangesAsync();
         }
 
-        public Task DeletePost(Guid PostId)
+        public async Task DeletePost(Guid PostId)
         {
-            throw new NotImplementedException();
+            var post = await _adminDataRepository.PostRepository.Get(PostId);
+            await _adminDataRepository.PostRepository.Delete(post);
+            await _adminDataRepository.SaveChangesAsync();
         }
 
-        public ICollection<GetPostDto> GetAll()
+        public async Task<ICollection<GetPostDto>> GetAll()
         {
-            throw new NotImplementedException();
+            var posts = await _adminDataRepository.PostRepository.GetAll();
+            return posts.ToPostDto();
         }
 
-        public ICollection<GetPostDto> GetAllByUser(string Id)
+        public async Task<ICollection<GetPostDto>> GetAllByUser(string Id)
         {
-            throw new NotImplementedException();
+            var posts = await _adminDataRepository.PostRepository.GetAll();
+            var UserPost = posts.Where(p => p.UserId == Id).ToList();
+            return UserPost.ToPostDto();
         }
 
-        public ICollection<GetPostDto> GetAllPublic()
+        public async Task<ICollection<GetPostDto>> GetAllPublic()
         {
-            throw new NotImplementedException();
+            var posts = await _adminDataRepository.PostRepository.GetAll();
+            var UserPost = posts.Where(p => p.IsPublic == true).ToList();
+            return UserPost.ToPostDto();
         }
 
-        public Task UpdateComment(Guid CommentId)
+        
+
+        public async Task UpdateComment(UpdateComment Dto)
         {
-            throw new NotImplementedException();
+            var Comment = await _adminDataRepository.CommentRepository.Get(Dto.CommentId);
+            if (Comment == null)
+                throw new Exception("This comment Not Found");
+            Comment.Value = Dto.Value;
+            await _adminDataRepository.CommentRepository.Update(Comment);
+            await _adminDataRepository.SaveChangesAsync();
         }
 
-        public Task UpdatePost(Guid CommentId)
+        
+        public async Task UpdatePost(UpdatePostDto Dto)
         {
-            throw new NotImplementedException();
+            var post = await _adminDataRepository.PostRepository.Get(Dto.PostId);
+            if (post == null)
+                throw new Exception("This post Not Found");
+            post.Title = Dto.Title;
+            post.Description = Dto.Description;
+            post.IsPublic =Dto.IsPublic;
+            post.Images  = Dto.Images;
+            await _adminDataRepository.PostRepository.Update(post);
+            await _adminDataRepository.SaveChangesAsync();
         }
+
+
+        /// update and delete images from posts Handling
+        /// save Images Path
     }
 }
