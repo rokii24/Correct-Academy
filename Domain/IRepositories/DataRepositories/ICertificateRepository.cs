@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.DataEntities;
+using Domain.IReposetories.DataRepository;
 using Domain.IRepositories.DataRepository;
 using System;
 using System.Collections.Generic;
