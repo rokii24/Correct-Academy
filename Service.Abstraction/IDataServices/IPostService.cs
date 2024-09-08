@@ -20,7 +20,6 @@ namespace Service.Abstraction.IDataServices
         Task DeletePostImage(Guid PostId, int Index);
         Task UpdatePost(UpdatePostDto Dto);
         Task UpdatePost(UpdatePostImagesDto Dto);
-
         Task UpdateComment(UpdateComment Dto);
     }
 }

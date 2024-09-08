@@ -43,9 +43,32 @@ namespace Persistence.Reposetories.DataReposatoiry
     {
 
         //            private readonly CorrectAcademyContext _context;
+        public Task AddAsync(Certificate certificate)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task DeleteAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<IEnumerable<Certificate>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Certificate> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Certificate certificate)
+        {
+            throw new NotImplementedException();
+        }
     }
+}
 //    {
 //            private readonly CorrectAcademyContext _context;
 

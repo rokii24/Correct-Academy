@@ -1,11 +1,7 @@
 ﻿using Domain.IRepositories.DataRepository;
-using Persistence.Repositories.DataRepository;
 using Service.Abstraction.IDataServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Service.Abstraction.IExternalServices;
+
 
 namespace Service.DataServices
 {
@@ -14,10 +10,10 @@ namespace Service.DataServices
         private readonly IChatService _chatService;
         private readonly IPostService _postServices;
 
-        public AdminDataService(AdminDataRepository adminDataRepository)
+        public AdminDataService(IAdminDataRepository adminDataRepository, IExternalService externalRepositorie)
         {
             _chatService=new ChatService();
-            _postServices=new PostService(adminDataRepository);
+            _postServices=new PostService(adminDataRepository, externalRepositorie);
         }
 
         public IChatService ChatService => _chatService;
