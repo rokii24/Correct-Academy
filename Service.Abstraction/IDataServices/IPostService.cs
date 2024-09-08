@@ -17,6 +17,7 @@ namespace Service.Abstraction.IDataServices
         Task<GetPostDto> Get(Guid Id);
         Task DeletePost(Guid PostId);
         Task DeleteComment(Guid CommentId);
+        Task DeletePostImage(Guid PostId, int Index);
         Task UpdatePost(UpdatePostDto Dto);
         Task UpdatePost(UpdatePostImagesDto Dto);
 
