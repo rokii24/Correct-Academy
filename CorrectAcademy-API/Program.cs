@@ -39,6 +39,7 @@ namespace CorrectAcademy_API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSignalR();
 
             #region Db Context
             var connection = builder.Configuration.GetConnectionString("SoomCon");
@@ -104,7 +105,9 @@ namespace CorrectAcademy_API
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            //app.UseEndpoints(endpoints => {
+            //endpoints.MapControllers();
+            //});
 
             app.MapControllers();
             app.MapHub<CorrectHub>("Hub");
