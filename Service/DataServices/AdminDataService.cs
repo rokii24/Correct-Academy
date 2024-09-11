@@ -1,10 +1,7 @@
 ﻿using Domain.IRepositories.DataRepository;
 using Service.Abstraction.IDataServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Service.Abstraction.IExternalServices;
+
 
 namespace Service.DataServices
 {
@@ -13,15 +10,11 @@ namespace Service.DataServices
         private readonly IChatService _chatService;
         private readonly IPostService _postServices;
 
-        public IChatService ChatService => throw new NotImplementedException();
-
-        public IPostService PostService => throw new NotImplementedException();
-
-        //public AdminDataService(AdminDataRepository adminDataRepository)
-        //{
-        //    _chatService=new ChatService();
-        //    _postServices=new PostService(adminDataRepository);
-        //}
+        public AdminDataService(IAdminDataRepository adminDataRepository, IExternalService externalRepositorie)
+        {
+            _chatService=new ChatService();
+            _postServices=new PostService(adminDataRepository, externalRepositorie);
+        }
 
         //public IChatService ChatService => _chatService;
 
