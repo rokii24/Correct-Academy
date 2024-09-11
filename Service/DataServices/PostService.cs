@@ -29,7 +29,7 @@ namespace Service.DataServices
            _adminDataRepository = adminDataRepository;
             _externalService = externalService;
         }    
-        public async Task<Guid> Add(AddPostDto Dto)
+        public async Task<Guid> Add(AddCategoryDto Dto)
         {
             var Post =  Dto.ToPost();
             await _adminDataRepository.PostRepository.Add(Post);
@@ -108,23 +108,18 @@ namespace Service.DataServices
             await _adminDataRepository.PostRepository.Delete(post);
             await _adminDataRepository.SaveChangesAsync();
         }
-        public async Task DeletePostImage(Guid PostId,int Index)
+
+        public Task DeletePostImage(Guid PostId, int Index)
         {
-            var post = await _adminDataRepository.PostRepository.Get(PostId);
-            if (post == null)
-            {
-                throw new Exception("Post Not found");
-            }
-            post?.Images?.Remove(post?.Images?.ElementAt(Index)??"");
-            await _adminDataRepository.PostRepository.Update(post);
-            await _adminDataRepository.SaveChangesAsync();
+            throw new NotImplementedException();
         }
+
         public async Task<GetPostDto> Get(Guid Id)
         {
 
             var post = await _adminDataRepository.PostRepository.Get(Id);
             return post.ToPostDto();
-        } 
+        }
 
         public async Task<ICollection<GetPostDto>> GetAll()
         {
@@ -209,11 +204,8 @@ namespace Service.DataServices
             var post = await _adminDataRepository.PostRepository.Get(Dto.PostId);
             if (post == null)
                 throw new Exception("This post Not Found");
-            foreach (var image in Dto?.Images?? [])
-            {
-                post?.Images?.Add(image);
-            }
-            //post.Images  = Dto.Images;
+
+            post.Images  = Dto.Images;
             await _adminDataRepository.PostRepository.Update(post);
             await _adminDataRepository.SaveChangesAsync();
         }

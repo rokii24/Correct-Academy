@@ -10,7 +10,7 @@ namespace Service.Extentions
 {
     public static class PostExtention 
     {
-       public static Post ToPost(this AddPostDto Dto)
+       public static Post ToPost(this AddCategoryDto Dto)
        {
             return new Post
             {

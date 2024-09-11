@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Contract.AddDtos
 {
-    public class AddPostDto
+    public class AddCategoryDto
     {
         public string? Description { get; set; }
         public string AcademyId { get; set; } = null!;

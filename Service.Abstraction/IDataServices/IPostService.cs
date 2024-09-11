@@ -6,7 +6,7 @@ namespace Service.Abstraction.IDataServices
 {
     public interface IPostService
     {
-        Task<Guid> Add(AddPostDto Dto);
+        Task<Guid> Add(AddCategoryDto Dto);
         Task<string> Add(CommentDto Dto, string Type);
         Task<string> Add(CommentReplyDto Dto, string Type);
         Task<ICollection<GetPostDto>> GetAll();

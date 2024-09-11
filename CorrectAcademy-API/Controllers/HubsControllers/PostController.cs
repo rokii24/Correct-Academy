@@ -1,7 +1,6 @@
 ﻿using Contract.AddDtos;
 using Contract.HubDtos;
 using CorrectAcademy_API.Hubs;
-using Domain.Entities.DataEntities;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -27,7 +26,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
         }
 
         [HttpPost("AddPost")]
-        public async Task<IActionResult> AddPost(AddPostDto modal)
+        public async Task<IActionResult> AddPost(AddCategoryDto modal)
         {
             try
             {
@@ -49,6 +48,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 var CommentId = await _adminDataService.PostService.Add(modal, "Text");
+
                 await _hubContext.Clients.Group(modal.PostId)
                 .ReceiveComment(modal.UserId, modal.Message, MessageType.Text);
                 return Ok();
@@ -64,6 +64,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 var path = await _adminDataService.PostService.Add(modal, "Text");
+
                 await _hubContext.Clients.Group(modal.CommentId)
                 .ReceiveCommentReply(modal.UserId ,modal.CommentId, modal.Message , MessageType.Text);
                 return Ok();
@@ -80,6 +81,8 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 var path = await _adminDataService.PostService.Add(modal, "Image");
+                //var path = Path.Combine(modal.AcademyId,modal.PostId  ,CommentId.ToString());
+                //await _externalService.FileService.SaveImage(path,modal.Message);
                 await _hubContext.Clients.Group(modal.PostId)
                 .ReceiveComment(modal.UserId, path, MessageType.Image);
                 return Ok();
@@ -95,6 +98,9 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 var path = await _adminDataService.PostService.Add(modal, "Image");
+
+                //var path = Path.Combine(modal.AcademyId, modal.PostId, CommentId.ToString());
+                //await _externalService.FileService.SaveImage(path, modal.Message);
                 await _hubContext.Clients.Group(modal.CommentId)
                 .ReceiveCommentReply(modal.UserId, modal.CommentId, path , MessageType.Image);
                 return Ok();
@@ -110,6 +116,9 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 var path = await _adminDataService.PostService.Add(modal, "Video");
+
+                //var path = Path.Combine(modal.AcademyId, modal.PostId, CommentId.ToString());
+                //await _externalService.FileService.SaveVideo(path, modal.Message);
                 await _hubContext.Clients.Group(modal.PostId)
                 .ReceiveComment(modal.UserId, path, MessageType.Video);
                 return Ok();
@@ -126,6 +135,9 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 var path = await _adminDataService.PostService.Add(modal, "Video");
+
+                //var path = Path.Combine(modal.AcademyId, modal.PostId, CommentId.ToString());
+                //await _externalService.FileService.SaveVideo(path, modal.Message);
                 await _hubContext.Clients.Group(modal.CommentId)
                 .ReceiveCommentReply(modal.UserId, modal.CommentId, path, MessageType.Video);
                 return Ok();
@@ -141,6 +153,9 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 var path = await _adminDataService.PostService.Add(modal, "Voice");
+
+                //var path = Path.Combine(modal.AcademyId, modal.PostId, CommentId.ToString());
+                //await _externalService.FileService.SaveVoice(path, modal.Message);
                 await _hubContext.Clients.Group(modal.PostId)
                 .ReceiveComment(modal.UserId, path , MessageType.Voice);
                 return Ok();
@@ -156,6 +171,9 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 var path = await _adminDataService.PostService.Add(modal, "Voice");
+
+                //var path = Path.Combine(modal.AcademyId, modal.PostId, CommentId.ToString());
+                //await _externalService.FileService.SaveVoice(path, modal.Message);
                 await _hubContext.Clients.Group(modal.CommentId)
                 .ReceiveCommentReply(modal.UserId, modal.CommentId, path, MessageType.Voice);
                 return Ok();
@@ -201,8 +219,6 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
                 return StatusCode(501, ex.Message);
             }
         }
-
-
         [HttpPut("UpdatePost")]
         public async Task<IActionResult> UpdatePost(UpdatePostDto modal)
         {
@@ -225,7 +241,9 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             try
             {
                 await _adminDataService.PostService.UpdatePost(modal);
-               
+                //var Post = await _adminDataService.PostService.Get(postid);
+                //await _hubContext.Clients.Group(modal.AcademyId)
+                //.ReceivePost(modal.UserId, Post);
                 return Ok();
             }
             catch (Exception ex)
@@ -263,20 +281,6 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
                 return StatusCode(501, ex.Message);
             }
         }
-        [HttpDelete("DeletePostImage")]
-        public async Task<IActionResult> DeletePostImage(Guid PostId,int ImageIndex)
-        {
-            try
-            {
-                await _adminDataService.PostService.DeletePostImage(PostId,ImageIndex);
-
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(501, ex.Message);
-            }
-        }
         [HttpDelete("DeleteComment")]
         public async Task<IActionResult> DeleteComment([FromBody]Guid CommentId)
         {
@@ -306,46 +310,5 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
             }
         }
 
-        [HttpGet("GetallRecentPosts")]
-        public async Task<IActionResult> GetallRecentPosts()
-        {
-            try
-            {
-                await _adminDataService.PostService.GetAll();
-
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(501, ex.Message);
-            }
-        }
-
-        [HttpGet("GetallUserProfilePosts")]
-        public async Task<IActionResult> GetallUserProfilePosts(string UserId)
-        {
-            try
-            {
-                await _adminDataService.PostService.GetAllByUser(UserId);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(501, ex.Message);
-            }
-        }
-        [HttpGet("GetallUPublicPosts")]
-        public async Task<IActionResult> GetallUPublicPosts(string UserId)
-        {
-            try
-            {
-                await _adminDataService.PostService.GetAllPublic();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(501, ex.Message);
-            }
-        }
     }
 }
