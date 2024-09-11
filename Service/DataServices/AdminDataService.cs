@@ -16,8 +16,8 @@ namespace Service.DataServices
             _postServices=new PostService(adminDataRepository, externalRepositorie);
         }
 
-        public IChatService ChatService => _chatService;
+        public IChatService ChatService => throw new NotImplementedException();
 
-        public IPostService PostService => _postServices;
+        public IPostService PostService => throw new NotImplementedException();
     }
 }

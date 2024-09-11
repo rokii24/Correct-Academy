@@ -1,31 +1,129 @@
-//<<<<<<< HEAD
-//﻿//using Domain.Entities.DataEntities;
-////using Domain.IRepositories.DataRepositories;
-////using Google;
-////using Microsoft.EntityFrameworkCore;
-////using Persistence.Context;
-////using System;
-////using System.Collections.Generic;
-////using System.Linq;
-////using System.Text;
-////using System.Threading.Tasks;
-////using static Persistence.Reposetories.DAtaReposatoiry.CertificateReposatiory;
+////﻿//using Domain.Entities.DataEntities;
+//////using Domain.IRepositories.DataRepositories;
+//////using Google;
+//////using Microsoft.EntityFrameworkCore;
+//////using Persistence.Context;
+//////using System;
+//////using System.Collections.Generic;
+//////using System.Linq;
+//////using System.Text;
+//////using System.Threading.Tasks;
+//////using static Persistence.Reposetories.DAtaReposatoiry.CertificateReposatiory;
 
-////namespace Persistence.Reposetories.DAtaReposatoiry
-////{
-////    public class CertificateReposatiory : ICertificateRepository
+//////namespace Persistence.Reposetories.DAtaReposatoiry
+//////{
+//////    public class CertificateReposatiory : ICertificateRepository
+//////    {
+//////        private readonly CorrectAcademyContext _context;
+
+//////        public CertificateReposatiory(CorrectAcademyContext context)
+//////        {
+//////            _context = context;
+//////        }
+
+//////        public async Task<Certificate> GetByIdAsync(int id)
+//////        {
+
+//using Domain.Entities.DataEntities;
+//using Domain.IRepositories.DataRepositories;
+//using Google;
+//using Microsoft.EntityFrameworkCore;
+//using Persistence.Context;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using static Persistence.Reposetories.DataReposatoiry.CertificateReposatiory;
+
+//namespace Persistence.Reposetories.DataReposatoiry
+//{
+//    public class CertificateReposatiory : ICertificateRepository
+//    {
+
+//        //            private readonly CorrectAcademyContext _context;
+
+
+//    } 
 ////    {
-////        private readonly CorrectAcademyContext _context;
+////            private readonly CorrectAcademyContext _context;
 
-////        public CertificateReposatiory(CorrectAcademyContext context)
-////        {
-////            _context = context;
-////        }
+////            public CertificateReposatiory(CorrectAcademyContext context)
+////            {
+////                _context = context;
+////            }
 
-////        public async Task<Certificate> GetByIdAsync(int id)
-////        {
+////            public async Task<Certificate> GetByIdAsync(Guid id)
+////            {
+////                return await _context.Certificates
+////                    .Include(c => c.Student)
+////                    .FirstOrDefaultAsync(c => c.Id == id);
+////            }
+
+//////            return await _context.Certificates
+//////                .Include(c => c.Student)
+//////                .FirstOrDefault(c => c.Id == id);
+//////        }
+
+//////        public async Task<IEnumerable<Certificate>> GetAllAsync()
+//////        {
+//////            return await _context.Certificates
+//////                .Include(c => c.Student) // Assuming you want to include the related Student entity
+//////                .ToListAsync();
+//////        }
+
+//////        public async Task AddAsync(Certificate certificate)
+//////        {
+//////            await _context.Certificates.AddAsync(certificate);
+//////            await _context.SaveChangesAsync();
+//////        }
+
+//////        public async Task UpdateAsync(Certificate certificate)
+//////        {
+//////            _context.Certificates.Update(certificate);
+//////            await _context.SaveChangesAsync();
+//////        }
+
+//////        public async Task DeleteAsync(string id)
+//////        {
+//////            var certificate = await _context.Certificates.FindAsync(id);
+//////            if (certificate != null)
+//////            {
+//////                _context.Certificates.Remove(certificate);
+//////                await _context.SaveChangesAsync();
+//////            }
+//////        }
+//////    }
+
+//////}
+//using Domain.Entities.DataEntities;
+//using Domain.IRepositories.DataRepositories;
+//using Google;
+//using Microsoft.EntityFrameworkCore;
+//using Persistence.Context;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using static Persistence.Reposetories.DAtaReposatoiry.CertificateReposatiory;
+
+//namespace Persistence.Reposetories.DAtaReposatoiry
+//{
+//    public class CertificateReposatiory : ICertificateRepository
+//    {
+//        private readonly CorrectAcademyContext _context;
+
+//        public CertificateReposatiory(CorrectAcademyContext context)
+//        {
+//            _context = context;
+//        }
+
+//        public async Task<Certificate> GetByIdAsync(int id)
+//        {
 
 using Domain.Entities.DataEntities;
+using Domain.IReposetories.DataRepository;
 using Domain.IRepositories.DataRepositories;
 using Google;
 using Microsoft.EntityFrameworkCore;
@@ -41,83 +139,88 @@ namespace Persistence.Reposetories.DataReposatoiry
 {
     public class CertificateReposatiory : ICertificateRepository
     {
-
-        //            private readonly CorrectAcademyContext _context;
-        public Task AddAsync(Certificate certificate)
+        public readonly CorrectAcademyContext _context;
+        public CertificateReposatiory(CorrectAcademyContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<Certificate> Get(Guid id)
+        {
+            return await _context.Set<Certificate>().FindAsync(id);
         }
 
-        public Task DeleteAsync(string id)
+        //public async Task<IEnumerable<Certificate>> GetAll()
+        //{
+        //    return await _context.Set<Certificate>().ToListAsync();
+        //}
+
+        public async Task Add(Certificate certificate)
         {
-            throw new NotImplementedException();
+            await _context.Set<Certificate>().AddAsync(certificate);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Certificate>> GetAllAsync()
+        public async Task Update(Certificate certificate)
         {
-            throw new NotImplementedException();
+            _context.Set<Certificate>().Update(certificate);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Certificate> GetByIdAsync(Guid id)
+        public async Task Delete(Certificate entity)
         {
-            throw new NotImplementedException();
+            var certificate = await Get(entity.Id);
+            if (certificate != null)
+            {
+                _context.Set<Certificate>().Remove(certificate);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task UpdateAsync(Certificate certificate)
+        async Task<ICollection<Certificate>> IBaseRepository<Certificate>.GetAll()
+        {
+            return await _context.Set<Certificate>().ToListAsync();
+        }
+
+       
+
+        public Task<ICollection<Certificate>> FilterBy(Func<Certificate, bool> filter)
         {
             throw new NotImplementedException();
         }
     }
+
+
+
+
+
+
+
 }
-//    {
-//            private readonly CorrectAcademyContext _context;
 
-//            public CertificateReposatiory(CorrectAcademyContext context)
-//            {
-//                _context = context;
-//            }
 
-//            public async Task<Certificate> GetByIdAsync(Guid id)
-//            {
-//                return await _context.Certificates
-//                    .Include(c => c.Student)
-//                    .FirstOrDefaultAsync(c => c.Id == id);
-//            }
 
-////            return await _context.Certificates
-////                .Include(c => c.Student)
-////                .FirstOrDefault(c => c.Id == id);
-////        }
 
-////        public async Task<IEnumerable<Certificate>> GetAllAsync()
-////        {
-////            return await _context.Certificates
-////                .Include(c => c.Student) // Assuming you want to include the related Student entity
-////                .ToListAsync();
-////        }
 
-////        public async Task AddAsync(Certificate certificate)
-////        {
-////            await _context.Certificates.AddAsync(certificate);
-////            await _context.SaveChangesAsync();
-////        }
 
-////        public async Task UpdateAsync(Certificate certificate)
-////        {
-////            _context.Certificates.Update(certificate);
-////            await _context.SaveChangesAsync();
-////        }
 
-////        public async Task DeleteAsync(string id)
-////        {
-////            var certificate = await _context.Certificates.FindAsync(id);
-////            if (certificate != null)
-////            {
-////                _context.Certificates.Remove(certificate);
-////                await _context.SaveChangesAsync();
-////            }
-////        }
-////    }
 
-////}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
