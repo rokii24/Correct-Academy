@@ -16,8 +16,8 @@ namespace Persistence.Configurations
         {
             builder.HasKey(ur => new { ur.InstructorId, ur.StudentId, ur.CourseId });
             builder.HasOne(ur=>(CorrectInstructor)ur.Instructor).WithMany(u=>u.UsersClass).HasForeignKey(u=>u.InstructorId);
-            builder.HasOne(ur=>(CorrectStudent)ur.Student).WithMany(u=>u.UsersClass).HasForeignKey(u=>u.StudentId);
-            builder.HasOne(ur=> ur.Course).WithMany(u=>u.Classes).HasForeignKey(u=>u.CourseId);
+            builder.HasOne(ur=>(CorrectStudent)ur.Student).WithMany(u=>u.UsersClasses).HasForeignKey(u=>u.StudentId);
+            builder.HasOne(ur=> ur.Course).WithMany(u=>u.UsersClasses).HasForeignKey(u=>u.CourseId);
         }
     }
 }

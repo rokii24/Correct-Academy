@@ -12,7 +12,8 @@ namespace Domain.Entities.DataEntities
         public double Price { get; set; }
         public ICollection<IInstructor> Instructor { get; set; } = null!;
         public ICollection<Exam>? Exams { get; set; }
-        public ICollection<UsersClass> Classes { get; set; } = null!;
+        public ICollection<UsersClass> UsersClasses { get; set; } = null!;
+        public ICollection<Class> Classes { get; set; } = null!;
         public ICollection<Category> Categories { get; set; } = null!;
     }
 }

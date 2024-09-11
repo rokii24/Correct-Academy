@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Persistence.Context;
 
 namespace Persistence.Configurations
 {
@@ -15,7 +16,11 @@ namespace Persistence.Configurations
         {
             builder.HasKey(e => e.Id);
 
-            
+            builder.HasOne(ur => (CorrectInstructor)ur.Instructor);
+
+            builder.HasMany(ur => (ICollection<CorrectStudent>)ur.Students)
+            .WithMany(u => u.Classes);
+
             builder.HasOne(cl => cl.Chat)
                 .WithOne(ch => ch.Class)
                 .HasForeignKey<Class>(cl => cl.ChatId); 
