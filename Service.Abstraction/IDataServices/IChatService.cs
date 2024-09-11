@@ -9,6 +9,8 @@ namespace Service.Abstraction.IDataServices
 {
     public interface IChatService
     {
-        public Guid AddChatMessage(MessageDto Dto);
+        public Guid AddChatMessage(MessageDto Dto,string Type);
+        public Guid AddChat(MessageDto Dto);
+        public Guid GetChatMessages(MessageDto Dto);
     }
 }
