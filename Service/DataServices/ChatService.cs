@@ -1,30 +1,84 @@
 ﻿using Contract.AddDtos;
 using Contract.GetDtos;
 using Contract.HubDtos;
+using Domain.Exceptions;
+using Domain.IRepositories.DataRepository;
 using Service.Abstraction.IDataServices;
+using Service.Extentions;
 
 namespace Service.DataServices
 {
     public class ChatService : IChatService
     {
-        public Guid AddChat(AddChatDto Dto)
+        public readonly IAdminDataRepository _adminDataRepository;
+
+        public ChatService(IAdminDataRepository adminDataRepository)
+        {
+            _adminDataRepository=adminDataRepository;
+        }
+
+        public async Task<Guid> AddChat(AddChatDto Dto)
+        {
+            var Chat = Dto.ToChat();
+            await _adminDataRepository.ChatRepository.Add(Chat);    
+            await _adminDataRepository.SaveChangesAsync();
+            return Chat.Id;
+        }
+
+        public async Task<Guid> AddChatMessage(MessageDto Dto, string Type)
+        {
+            //var classs = _adminDataRepository. 
+            var ChatMessage = Dto.ToChatMessage(Type);
+            await _adminDataRepository.ChatMessageRepository.Add(ChatMessage);
+            await _adminDataRepository.SaveChangesAsync();
+            return ChatMessage.Id;
+        }
+
+        public async Task DeleteChat(Guid Id)
+        {
+            var chat = await _adminDataRepository.ChatRepository.Get(Id);
+            if (chat == null)
+                throw new NotFoundException("Chat Not found");
+
+            await _adminDataRepository.ChatRepository.Delete(chat);
+            await _adminDataRepository.SaveChangesAsync();  
+        }
+
+        public async Task DeleteMemberFromChat(Guid ChatId, Guid MemberId)
+        {
+            // var user = await _adminDataRepository.user
+            var chat = await _adminDataRepository.ChatRepository.Get(ChatId);
+            if (chat == null)
+                throw new NotFoundException("Chat Not found");
+
+            
+
+        }
+
+        public Task DeleteMessage(Guid Id)
         {
             throw new NotImplementedException();
         }
 
-        public Guid AddChatMessage(MessageDto Dto, string Type)
+        public Task<ICollection<GetChatDto>> GetChatInfo(Guid Id)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<GetChatDto> GetChatInfo(Guid Id)
+        public Task<ICollection<GetChatMessagesDto>> GetChatMessagesDto(Guid Id)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<GetChatMessagesDto> GetChatMessagesDto(Guid Id)
+        public Task UpdateChat(UpdateChatDto Dto)
         {
             throw new NotImplementedException();
         }
+
+        public Task UpdateMessage(UpdateMessagesDto Dto)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

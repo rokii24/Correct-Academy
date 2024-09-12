@@ -11,6 +11,8 @@ namespace Domain.IRepositories.DataRepository
     {
         IPostRepository PostRepository { get; }
         ICommentRepository CommentRepository { get; }
+        IChatRepository ChatRepository { get; }
+        IChatMessageRepository ChatMessageRepository { get; }
         int SaveChanges();
         Task<int> SaveChangesAsync();
     }

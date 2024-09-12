@@ -12,7 +12,7 @@ namespace Service.DataServices
 
         public AdminDataService(IAdminDataRepository adminDataRepository, IExternalService externalRepositorie)
         {
-            _chatService=new ChatService();
+            _chatService=new ChatService(adminDataRepository);
             _postServices=new PostService(adminDataRepository, externalRepositorie);
         }
 

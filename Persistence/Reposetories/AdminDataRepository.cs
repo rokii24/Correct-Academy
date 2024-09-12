@@ -12,6 +12,8 @@ namespace Persistence.Repositories.DataRepository
         private readonly CorrectAcademyContext _context;
         private IPostRepository _postRepository = null!;
         private ICommentRepository _commentRepository = null!;
+        private IChatRepository _chatRepository = null!;
+        private IChatMessageRepository _chatMessageRepository = null!;
 
         public AdminDataRepository(CorrectAcademyContext context) => _context = context;
 
@@ -36,7 +38,27 @@ namespace Persistence.Repositories.DataRepository
             }
         }
 
-      
+        public IChatRepository ChatRepository
+        {
+            get
+            {
+                if (_chatRepository == null)
+                    _chatRepository = new ChatRepository(_context);
+
+                return _chatRepository;
+            }
+        }
+
+        public IChatMessageRepository ChatMessageRepository
+        {
+            get
+            {
+                if (_chatMessageRepository == null)
+                    _chatMessageRepository = new ChatMessageRepository(_context);
+
+                return _chatMessageRepository;
+            }
+        }
 
         public int SaveChanges() => _context.SaveChanges();
         public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
