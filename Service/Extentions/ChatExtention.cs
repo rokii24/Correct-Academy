@@ -1,4 +1,5 @@
 ﻿using Contract.AddDtos;
+using Contract.GetDtos;
 using Contract.HubDtos;
 using Domain.Entities.DataEntities;
 using Domain.Enums;
@@ -33,6 +34,17 @@ namespace Service.Extentions
                // ChatId=
                UserId= Dto.UserId,
                AddingDate = DateTime.Now,             
+            };
+        }
+        public static GetChatDto ToGetChatDto(this Chat chat)
+        {
+            return new GetChatDto
+            {
+                ChatImage= chat.ChatImage,
+                Description= chat.Description,
+                Title= chat.Title,
+                ChatId = chat.Id,
+                
             };
         }
     }

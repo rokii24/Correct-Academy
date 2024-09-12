@@ -1,6 +1,7 @@
 ﻿using Contract.AddDtos;
 using Contract.GetDtos;
 using Contract.HubDtos;
+using Domain.Entities.DataEntities;
 using Domain.Exceptions;
 using Domain.IRepositories.DataRepository;
 using Service.Abstraction.IDataServices;
@@ -44,25 +45,35 @@ namespace Service.DataServices
             await _adminDataRepository.SaveChangesAsync();  
         }
 
+        // not Implemented
         public async Task DeleteMemberFromChat(Guid ChatId, Guid MemberId)
         {
-            // var user = await _adminDataRepository.user
+          //  var user = await _adminDataRepository
             var chat = await _adminDataRepository.ChatRepository.Get(ChatId);
             if (chat == null)
                 throw new NotFoundException("Chat Not found");
-
             
-
+            
         }
 
-        public Task DeleteMessage(Guid Id)
+        public async Task DeleteMessage(Guid Id)
         {
-            throw new NotImplementedException();
+            var chat = await _adminDataRepository.ChatMessageRepository.Get(Id);
+            if (chat == null)
+                throw new NotFoundException("ChatMessage Not found");
+
+            await _adminDataRepository.ChatMessageRepository.Delete(chat);
+            await _adminDataRepository.SaveChangesAsync();
         }
 
-        public Task<ICollection<GetChatDto>> GetChatInfo(Guid Id)
+        public async Task<GetChatDto> GetChatInfo(Guid Id)
         {
+            var chat = await _adminDataRepository.ChatRepository.Get(Id);
+            if (chat == null)
+                throw new NotFoundException("Chat Not found");
+            var Dto = chat.ToGetChatDto();
             throw new NotImplementedException();
+
         }
 
         public Task<ICollection<GetChatMessagesDto>> GetChatMessagesDto(Guid Id)
