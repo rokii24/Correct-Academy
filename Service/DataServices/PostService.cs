@@ -8,15 +8,7 @@ using Domain.Utilities;
 using Service.Abstraction.IDataServices;
 using Service.Abstraction.IExternalServices;
 using Service.Extentions;
-using Service.ExternalServices;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Service.DataServices
 {

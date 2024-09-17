@@ -42,7 +42,7 @@ namespace CorrectAcademy_API
             builder.Services.AddSignalR();
 
             #region Db Context
-            var connection = builder.Configuration.GetConnectionString("ShroukCon");
+            var connection = builder.Configuration.GetConnectionString("SoomCon");
             builder.Services
                 .AddDbContext<CorrectAcademyContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Persistence")));
 

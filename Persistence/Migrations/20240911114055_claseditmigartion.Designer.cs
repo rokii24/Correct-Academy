@@ -12,8 +12,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CorrectAcademyContext))]
-    [Migration("20240904131333_categoryMigration")]
-    partial class categoryMigration
+    [Migration("20240911114055_claseditmigartion")]
+    partial class claseditmigartion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,21 @@ namespace Persistence.Migrations
                     b.HasIndex("CoursesId");
 
                     b.ToTable("CategoryCourse");
+                });
+
+            modelBuilder.Entity("ClassCorrectStudent", b =>
+                {
+                    b.Property<Guid>("ClassesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StudentsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ClassesId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("ClassCorrectStudent");
                 });
 
             modelBuilder.Entity("CorrectInstructorCourse", b =>
@@ -128,6 +143,16 @@ namespace Persistence.Migrations
                     b.Property<Guid>("ChatId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CorrectInstructorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("InstructorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -136,6 +161,12 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ChatId")
                         .IsUnique();
+
+                    b.HasIndex("CorrectInstructorId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("InstructorId");
 
                     b.ToTable("Classes");
                 });
@@ -209,6 +240,9 @@ namespace Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AddingDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid?>("MessageId")
                         .HasColumnType("uniqueidentifier");
@@ -328,14 +362,9 @@ namespace Persistence.Migrations
                     b.Property<string>("CorrectInstructorId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CorrectStudentId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("InstructorId", "StudentId", "CourseId");
 
                     b.HasIndex("CorrectInstructorId");
-
-                    b.HasIndex("CorrectStudentId");
 
                     b.HasIndex("CourseId");
 
@@ -655,6 +684,21 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ClassCorrectStudent", b =>
+                {
+                    b.HasOne("Domain.Entities.DataEntities.Class", null)
+                        .WithMany()
+                        .HasForeignKey("ClassesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Persistence.Context.CorrectStudent", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CorrectInstructorCourse", b =>
                 {
                     b.HasOne("Domain.Entities.DataEntities.Course", null)
@@ -689,7 +733,27 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Persistence.Context.CorrectInstructor", null)
+                        .WithMany("Classes")
+                        .HasForeignKey("CorrectInstructorId");
+
+                    b.HasOne("Domain.Entities.DataEntities.Course", "Course")
+                        .WithMany("Classes")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Persistence.Context.CorrectInstructor", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Chat");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Instructor");
                 });
 
             modelBuilder.Entity("Domain.Entities.DataEntities.Course", b =>
@@ -788,15 +852,11 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.DataEntities.UsersClass", b =>
                 {
                     b.HasOne("Persistence.Context.CorrectInstructor", null)
-                        .WithMany("Classes")
+                        .WithMany("UsersClasses")
                         .HasForeignKey("CorrectInstructorId");
 
-                    b.HasOne("Persistence.Context.CorrectStudent", null)
-                        .WithMany("Classes")
-                        .HasForeignKey("CorrectStudentId");
-
                     b.HasOne("Domain.Entities.DataEntities.Course", "Course")
-                        .WithMany("Classes")
+                        .WithMany("UsersClasses")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -808,7 +868,7 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Persistence.Context.CorrectStudent", "Student")
-                        .WithMany("UsersClass")
+                        .WithMany("UsersClasses")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -934,6 +994,8 @@ namespace Persistence.Migrations
                     b.Navigation("Classes");
 
                     b.Navigation("Exams");
+
+                    b.Navigation("UsersClasses");
                 });
 
             modelBuilder.Entity("Domain.Entities.DataEntities.Exam", b =>
@@ -975,19 +1037,19 @@ namespace Persistence.Migrations
                     b.Navigation("Exams");
 
                     b.Navigation("UsersClass");
+
+                    b.Navigation("UsersClasses");
                 });
 
             modelBuilder.Entity("Persistence.Context.CorrectStudent", b =>
                 {
                     b.Navigation("Certificates");
 
-                    b.Navigation("Classes");
-
                     b.Navigation("Courses");
 
                     b.Navigation("StudentExams");
 
-                    b.Navigation("UsersClass");
+                    b.Navigation("UsersClasses");
                 });
 #pragma warning restore 612, 618
         }
