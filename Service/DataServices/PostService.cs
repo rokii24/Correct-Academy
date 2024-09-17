@@ -21,7 +21,7 @@ namespace Service.DataServices
            _adminDataRepository = adminDataRepository;
             _externalService = externalService;
         }    
-        public async Task<Guid> Add(AddCategoryDto Dto)
+        public async Task<Guid> Add(AddPostDto Dto)
         {
             var Post =  Dto.ToPost();
             await _adminDataRepository.PostRepository.Add(Post);

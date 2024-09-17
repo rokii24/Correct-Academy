@@ -26,7 +26,7 @@ namespace CorrectAcademy_API.Controllers.HubsControllers
         }
 
         [HttpPost("AddPost")]
-        public async Task<IActionResult> AddPost(AddCategoryDto modal)
+        public async Task<IActionResult> AddPost(AddPostDto modal)
         {
             try
             {

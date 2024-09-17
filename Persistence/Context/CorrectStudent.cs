@@ -12,7 +12,6 @@ namespace Persistence.Context
 {
     public class CorrectStudent : CorrectUser, IStudent
     {
-        internal readonly object Class;
 
         public int Age { get; set; }
         public Gender Gender { get; set; } 
@@ -20,7 +19,9 @@ namespace Persistence.Context
         public ICollection<Certificate>? Certificates { get; set; }
         public ICollection<Course> Courses { get; set; } = null!;
         public ICollection<StudentExam> StudentExams { get; set; } = null!;
-        public ICollection<UsersClass> UsersClass { get; set; }
-        public ICollection<UsersClass> Classes { get; set; }
+        //public ICollection<UsersClass> UsersClass { get; set; }
+        public ICollection<Class>? Classes { get; set; }
+        public ICollection<UsersClass>? UsersClasses { get; set; }
+       //public ICollection<Class> IStudent.Classes { get; set; }
     }
 }
