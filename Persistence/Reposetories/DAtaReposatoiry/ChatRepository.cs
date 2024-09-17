@@ -35,7 +35,6 @@ namespace Persistence.Reposetories.DataReposatoiry
 
         public async Task<Chat> Get(Guid id)
         {
-
             var Chat = await _context.Chats.FirstOrDefaultAsync(c => c.Id == id);
             if (Chat == null)
                 throw new Exception("Chat Not Found");

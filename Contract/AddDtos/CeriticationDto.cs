@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contract.AddDtos
 {
-    public record Category
+    public record CeriticationDto
     {
-        public string CategoryName { get; set; } = null!;
-        public string Description { get; set; } = null!;
     }
 }
