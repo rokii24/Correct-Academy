@@ -8,5 +8,8 @@ namespace Contract.AddDtos
 {
     public record CeriticationDto
     {
+        public string Description { get; set; } = null!;
+        public string? Image { get; set; }
+        public string StudentId { get; set; } = null!;
     }
 }
