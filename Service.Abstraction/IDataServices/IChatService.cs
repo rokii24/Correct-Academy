@@ -19,6 +19,6 @@ namespace Service.Abstraction.IDataServices
         public Task UpdateChat(UpdateChatDto Dto);
         public Task DeleteMessage(Guid Id);
         public Task DeleteChat(Guid Id);
-        public Task DeleteMemberFromChat(Guid ChatId, Guid MemberId);
+        public Task DeleteMemberFromChat(Guid ChatId, string MemberId);
     }
 }

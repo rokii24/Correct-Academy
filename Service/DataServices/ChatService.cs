@@ -5,6 +5,7 @@ using Domain.Entities.DataEntities;
 using Domain.Exceptions;
 using Domain.IRepositories.DataRepository;
 using Service.Abstraction.IDataServices;
+using Service.Abstraction.IExternalServices;
 using Service.Extentions;
 
 namespace Service.DataServices
@@ -12,10 +13,11 @@ namespace Service.DataServices
     public class ChatService : IChatService
     {
         public readonly IAdminDataRepository _adminDataRepository;
-
-        public ChatService(IAdminDataRepository adminDataRepository)
+        public readonly IExternalService _externalService;
+        public ChatService(IAdminDataRepository adminDataRepository, IExternalService externalService)
         {
             _adminDataRepository=adminDataRepository;
+            _externalService = externalService;
         }
 
         public async Task<Guid> AddChat(AddChatDto Dto)
@@ -46,14 +48,12 @@ namespace Service.DataServices
         }
 
         // not Implemented
-        public async Task DeleteMemberFromChat(Guid ChatId, Guid MemberId)
+        public async Task DeleteMemberFromChat(Guid ChatId, string MemberId)
         {
-          //  var user = await _adminDataRepository
+            await _externalService.AuthService.DeleteUserAsync(MemberId);
             var chat = await _adminDataRepository.ChatRepository.Get(ChatId);
             if (chat == null)
-                throw new NotFoundException("Chat Not found");
-            
-            
+                throw new NotFoundException("Chat Not found");  
         }
 
         public async Task DeleteMessage(Guid Id)
