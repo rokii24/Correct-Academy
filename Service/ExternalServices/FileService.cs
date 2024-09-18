@@ -36,7 +36,7 @@ namespace Service.ExternalServices
         public async Task<string> SavePdf(string path, string pdf)
         {
             string mimeType = Base64Utils.GetPdfMimeTypeFromBase64(pdf);
-           
+
             string fileExtension = await Save(path, mimeType, pdf);
 
             return $"{path}{fileExtension}";
@@ -45,7 +45,7 @@ namespace Service.ExternalServices
         public async Task<string> SaveVideo(string path, string video)
         {
             string mimeType = Base64Utils.GetVideoMimeTypeFromBase64(video);
-            
+
             string fileExtension = await Save(path, mimeType, video);
 
             return $"{path}{fileExtension}";
@@ -54,7 +54,7 @@ namespace Service.ExternalServices
         public async Task<string> SaveVoice(string path, string voice)
         {
             string mimeType = Base64Utils.GetVoiceMimeTypeFromBase64(voice);
-            
+
             string fileExtension = await Save(path, mimeType, voice);
 
             return $"{path}{fileExtension}";
