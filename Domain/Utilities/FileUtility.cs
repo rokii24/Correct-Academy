@@ -14,9 +14,9 @@ namespace Domain.Utilities
                 { JpegImage, ".jpg" },
                 { PngImage, ".png" },
                 { GifImage, ".gif" },
-           
+
                 { Pdf, ".pdf" },
-                
+
                 { Mp4Video, ".mp4" },
                 { WebMVideo, ".webm" },
                 { AviVideo, ".avi" },
@@ -35,9 +35,9 @@ namespace Domain.Utilities
         public static readonly Dictionary<string, string> ImagePrefixes =
             new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
             {
-                { "/9J/4", FileUtility.JpegImage},
-                { "IVBOR", FileUtility.PngImage },
-                { "R0LGO", FileUtility.GifImage },
+                { "/9J/4", JpegImage},
+                { "IVBOR", PngImage },
+                { "R0LGO", GifImage },
             };
         public const string JpegImage = "image/jpeg";
         public const string PngImage = "image/png";

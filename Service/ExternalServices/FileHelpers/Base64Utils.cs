@@ -1,10 +1,4 @@
 ﻿using Domain.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Service.ExternalServices.FileHelpers
 {
@@ -12,7 +6,7 @@ namespace Service.ExternalServices.FileHelpers
     {
         private static string GetValue(string data)
         {
-            if (FileUtility.VedioPrefixes.TryGetValue(data.ToUpper(), out string? value))
+            if (FileUtility.ImagePrefixes.TryGetValue(data.ToUpper(), out string? value))
                 return value;
             throw new Exception("");
         }
@@ -30,7 +24,7 @@ namespace Service.ExternalServices.FileHelpers
         {
             return GetValue(base64String.Substring(0, 5)); //
         }
-       
+
         /// <summary>
         /// Problem
         /// </summary>

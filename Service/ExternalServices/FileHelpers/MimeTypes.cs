@@ -14,8 +14,6 @@ namespace Service.ExternalServices.FileHelpers
             if (FileUtility.MimeTypeMappings
                     .TryGetValue(mimeType, out string? extension))
                 return extension;
-            
-
             throw new ArgumentException($"Unsupported MIME type: {mimeType}");
         }
     }
